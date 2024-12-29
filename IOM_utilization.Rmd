@@ -1,5 +1,5 @@
 
-# Evolution of intraoperative monitoring utilization 2006-2022
+# Evolution of intraoperative monitoring
 
 
 
@@ -50,6 +50,9 @@ library(ggplot2)
 
 # install.packages("plotly")
 library(plotly)
+
+# install.packages("VGAM")
+library(VGAM)
 ```
 
 
@@ -67,7 +70,7 @@ library(plotly)
 Create the connection to the database
 ```{r}
 # Create the connection to the MarketScan database
-MarketScan <- DBI::dbConnect(RSQLite::SQLite(), "D:\\MarketScan\\MarketScan.db")
+MarketScan <- DBI::dbConnect(RSQLite::SQLite(), "F:\\MarketScan\\MarketScan.db")
 src_dbi(MarketScan)
 ```
 
@@ -1247,6 +1250,450 @@ CPA_tumor_resection_monitoring_results_by_year_plot
 
 
 
+Healthcare resource utilization among patients with cerebellopontine angle tumor resection
+```{r}
+# Health care resource utilization
+
+#################################2006#################################
+CPA_tumor_resection_utilization_2006_i <- ms_i_2006 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2007#################################
+CPA_tumor_resection_utilization_2007_i <- ms_i_2007 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2008#################################
+CPA_tumor_resection_utilization_2008_i <- ms_i_2008 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2009#################################
+CPA_tumor_resection_utilization_2009_i <- ms_i_2009 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2010#################################
+CPA_tumor_resection_utilization_2010_i <- ms_i_2010 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2011#################################
+CPA_tumor_resection_utilization_2011_i <- ms_i_2011 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2012#################################
+CPA_tumor_resection_utilization_2012_i <- ms_i_2012 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2013#################################
+CPA_tumor_resection_utilization_2013_i <- ms_i_2013 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2014#################################
+CPA_tumor_resection_utilization_2014_i <- ms_i_2014 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2015#################################
+CPA_tumor_resection_utilization_2015_i <- ms_i_2015 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2016#################################
+CPA_tumor_resection_utilization_2016_i <- ms_i_2016 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2017#################################
+CPA_tumor_resection_utilization_2017_i <- ms_i_2017 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2018#################################
+CPA_tumor_resection_utilization_2018_i <- ms_i_2018 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2019#################################
+CPA_tumor_resection_utilization_2019_i <- ms_i_2019 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2020#################################
+CPA_tumor_resection_utilization_2020_i <- ms_i_2020 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2021#################################
+CPA_tumor_resection_utilization_2021_i <- ms_i_2021 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2022#################################
+CPA_tumor_resection_utilization_2022_i <- ms_i_2022 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!CPA_tumor_resection_BAEP_cranial_nerve_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+
+
+# Utilization
+CPA_tumor_resection_utilization <- bind_rows(CPA_tumor_resection_utilization_2006_i, CPA_tumor_resection_utilization_2007_i, CPA_tumor_resection_utilization_2008_i, CPA_tumor_resection_utilization_2009_i, CPA_tumor_resection_utilization_2010_i, CPA_tumor_resection_utilization_2011_i, CPA_tumor_resection_utilization_2012_i, CPA_tumor_resection_utilization_2013_i, CPA_tumor_resection_utilization_2014_i, CPA_tumor_resection_utilization_2015_i, CPA_tumor_resection_utilization_2016_i, CPA_tumor_resection_utilization_2017_i, CPA_tumor_resection_utilization_2018_i, CPA_tumor_resection_utilization_2019_i, CPA_tumor_resection_utilization_2020_i, CPA_tumor_resection_utilization_2021_i, CPA_tumor_resection_utilization_2022_i) %>% 
+  mutate(across(ENROLID, as.numeric)) %>% 
+  filter(ENROLID>0) %>%    
+  arrange(ENROLID, ADMDATE) %>% 
+  right_join(CPA_tumor_resection_BAEP_cranial_nerve_demographics, by="ENROLID") %>% 
+  arrange(ENROLID, ADMDATE) %>%
+  rowwise() %>% 
+  mutate(surgery_within_the_admission = case_when(
+    (SVCDATE %in% as.Date(ADMDATE : (ADMDATE + DAYS))) ~ "yes",
+    TRUE ~ "no"
+  )) %>% 
+  ungroup() %>% 
+  filter(surgery_within_the_admission=="yes") %>% 
+  rename(LOS=DAYS) %>% 
+  group_by(ENROLID, ADMDATE) %>% 
+  mutate(cost=sum(TOTPAY)) %>% 
+  mutate(total_LOS=sum(LOS)) %>% 
+  ungroup() %>% 
+  select(ENROLID, ADMDATE, SVCDATE, total_LOS, cost, any_monitoring_numeric, AGE, male, year_surgery, CPA_tumor_resection_type, rural, region_category, employment_status_category, employment_class_category) %>% 
+  collect()
+  
+  
+
+
+# Inflation calculations (https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&categories=survey&_gl=1*1piml3m*_ga*NDg1MDgzODA2LjE3MDg0OTgxMjg.*_ga_J4698JNNFT*MTcwODQ5ODQ5Mi4xLjEuMTcwODQ5ODUzNi4xNi4wLjA.#eyJhcHBpZCI6MTksInN0ZXBzIjpbMSwyLDMsM10sImRhdGEiOltbImNhdGVnb3JpZXMiLCJTdXJ2ZXkiXSxbIk5JUEFfVGFibGVfTGlzdCIsIjQiXSxbIkZpcnN0X1llYXIiLCIyMDA2Il0sWyJMYXN0X1llYXIiLCIyMDIyIl0sWyJTY2FsZSIsIjAiXSxbIlNlcmllcyIsIlEiXV19 Last accessed 2/11/2024)
+# https://meps.ahrq.gov/about_meps/Price_Index.shtml
+inflation_2006_Q1 <- 0.83135
+inflation_2006_Q2 <- 0.83871	
+inflation_2006_Q3 <- 0.84486	
+inflation_2006_Q4 <- 0.84806
+inflation_2007_Q1 <- 0.85655
+inflation_2007_Q2 <- 0.86201	
+inflation_2007_Q3 <- 0.86568	
+inflation_2007_Q4 <- 0.86982	
+inflation_2008_Q1 <- 0.87359
+inflation_2008_Q2 <- 0.87678	
+inflation_2008_Q3 <- 0.88361	
+inflation_2008_Q4 <- 0.88511
+inflation_2009_Q1 <- 0.88536
+inflation_2009_Q2 <- 0.88418	
+inflation_2009_Q3 <- 0.88474	
+inflation_2009_Q4 <- 0.88798	
+inflation_2010_Q1 <- 0.89018	
+inflation_2010_Q2 <- 0.89431	
+inflation_2010_Q3 <- 0.89755			
+inflation_2010_Q4 <- 0.90270			
+inflation_2011_Q1 <- 0.90710
+inflation_2011_Q2 <- 0.91363	
+inflation_2011_Q3 <- 0.91840	
+inflation_2011_Q4 <- 0.91951	
+inflation_2012_Q1 <- 0.92495	
+inflation_2012_Q2 <- 0.92881	
+inflation_2012_Q3 <- 0.93459
+inflation_2012_Q4 <- 0.93869	
+inflation_2013_Q1 <- 0.94204
+inflation_2013_Q2 <- 0.94474
+inflation_2013_Q3 <- 0.94989
+inflation_2013_Q4 <- 0.95477		
+inflation_2014_Q1 <- 0.95840
+inflation_2014_Q2 <- 0.96343	
+inflation_2014_Q3 <- 0.96762
+inflation_2014_Q4 <- 0.96800		
+inflation_2015_Q1 <- 0.96742
+inflation_2015_Q2 <- 0.97302	
+inflation_2015_Q3 <- 0.97536
+inflation_2015_Q4 <- 0.97527
+inflation_2016_Q1 <- 0.97468	
+inflation_2016_Q2 <- 0.98108	
+inflation_2016_Q3 <- 0.98372
+inflation_2016_Q4 <- 0.98884
+inflation_2017_Q1 <- 0.99389
+inflation_2017_Q2 <- 0.99656		
+inflation_2017_Q3 <- 1.00174
+inflation_2017_Q4 <- 1.00780	
+inflation_2018_Q1 <- 1.01428	
+inflation_2018_Q2 <- 1.02140		
+inflation_2018_Q3 <- 1.02586
+inflation_2018_Q4 <- 1.03005		
+inflation_2019_Q1 <- 1.03375	
+inflation_2019_Q2 <- 1.03878		
+inflation_2019_Q3 <- 1.04213
+inflation_2019_Q4 <- 1.04566	
+inflation_2020_Q1 <- 1.05042
+inflation_2020_Q2 <- 1.04661		
+inflation_2020_Q3 <- 1.05593
+inflation_2020_Q4 <- 1.06330
+inflation_2021_Q1 <- 1.07731		
+inflation_2021_Q2 <- 1.09332		
+inflation_2021_Q3 <- 1.10957
+inflation_2021_Q4 <- 1.12858
+inflation_2022_Q1 <- 1.15182		
+inflation_2022_Q2 <- 1.17704			
+inflation_2022_Q3 <- 1.18980
+inflation_2022_Q4 <- 1.20115
+
+
+# Cost adjusted for inflation (to Q4 2022 year)
+inflation_adjusted_CPA_tumor_resection_utilization <- CPA_tumor_resection_utilization %>% 
+  mutate(year_quarter = quarter(SVCDATE, with_year=TRUE)) %>%
+  mutate(
+    cost = case_when(
+  year_quarter == 2006.1 ~ cost*(inflation_2022_Q4/inflation_2006_Q1), 
+  year_quarter == 2006.2 ~ cost*(inflation_2022_Q4/inflation_2006_Q2),
+  year_quarter == 2006.3 ~ cost*(inflation_2022_Q4/inflation_2006_Q3),
+  year_quarter == 2006.4 ~ cost*(inflation_2022_Q4/inflation_2006_Q4),  
+  year_quarter == 2007.1 ~ cost*(inflation_2022_Q4/inflation_2007_Q1), 
+  year_quarter == 2007.2 ~ cost*(inflation_2022_Q4/inflation_2007_Q2),
+  year_quarter == 2007.3 ~ cost*(inflation_2022_Q4/inflation_2007_Q3),
+  year_quarter == 2007.4 ~ cost*(inflation_2022_Q4/inflation_2007_Q4),  
+  year_quarter == 2008.1 ~ cost*(inflation_2022_Q4/inflation_2008_Q1), 
+  year_quarter == 2008.2 ~ cost*(inflation_2022_Q4/inflation_2008_Q2),
+  year_quarter == 2008.3 ~ cost*(inflation_2022_Q4/inflation_2008_Q3),
+  year_quarter == 2008.4 ~ cost*(inflation_2022_Q4/inflation_2008_Q4), 
+  year_quarter == 2009.1 ~ cost*(inflation_2022_Q4/inflation_2009_Q1), 
+  year_quarter == 2009.2 ~ cost*(inflation_2022_Q4/inflation_2009_Q2),
+  year_quarter == 2009.3 ~ cost*(inflation_2022_Q4/inflation_2009_Q3),
+  year_quarter == 2009.4 ~ cost*(inflation_2022_Q4/inflation_2009_Q4), 
+  year_quarter == 2010.1 ~ cost*(inflation_2022_Q4/inflation_2010_Q1), 
+  year_quarter == 2010.2 ~ cost*(inflation_2022_Q4/inflation_2010_Q2),
+  year_quarter == 2010.3 ~ cost*(inflation_2022_Q4/inflation_2010_Q3),
+  year_quarter == 2010.4 ~ cost*(inflation_2022_Q4/inflation_2010_Q4), 
+  year_quarter == 2011.1 ~ cost*(inflation_2022_Q4/inflation_2011_Q1), 
+  year_quarter == 2011.2 ~ cost*(inflation_2022_Q4/inflation_2011_Q2),
+  year_quarter == 2011.3 ~ cost*(inflation_2022_Q4/inflation_2011_Q3),
+  year_quarter == 2011.4 ~ cost*(inflation_2022_Q4/inflation_2011_Q4), 
+  year_quarter == 2012.1 ~ cost*(inflation_2022_Q4/inflation_2012_Q1), 
+  year_quarter == 2012.2 ~ cost*(inflation_2022_Q4/inflation_2012_Q2),
+  year_quarter == 2012.3 ~ cost*(inflation_2022_Q4/inflation_2012_Q3),
+  year_quarter == 2012.4 ~ cost*(inflation_2022_Q4/inflation_2012_Q4), 
+  year_quarter == 2013.1 ~ cost*(inflation_2022_Q4/inflation_2013_Q1), 
+  year_quarter == 2013.2 ~ cost*(inflation_2022_Q4/inflation_2013_Q2),
+  year_quarter == 2013.3 ~ cost*(inflation_2022_Q4/inflation_2013_Q3),
+  year_quarter == 2013.4 ~ cost*(inflation_2022_Q4/inflation_2013_Q4), 
+  year_quarter == 2014.1 ~ cost*(inflation_2022_Q4/inflation_2014_Q1), 
+  year_quarter == 2014.2 ~ cost*(inflation_2022_Q4/inflation_2014_Q2),
+  year_quarter == 2014.3 ~ cost*(inflation_2022_Q4/inflation_2014_Q3),
+  year_quarter == 2014.4 ~ cost*(inflation_2022_Q4/inflation_2014_Q4),  
+  year_quarter == 2015.1 ~ cost*(inflation_2022_Q4/inflation_2015_Q1), 
+  year_quarter == 2015.2 ~ cost*(inflation_2022_Q4/inflation_2015_Q2),
+  year_quarter == 2015.3 ~ cost*(inflation_2022_Q4/inflation_2015_Q3),
+  year_quarter == 2015.4 ~ cost*(inflation_2022_Q4/inflation_2015_Q4),  
+  year_quarter == 2016.1 ~ cost*(inflation_2022_Q4/inflation_2016_Q1), 
+  year_quarter == 2016.2 ~ cost*(inflation_2022_Q4/inflation_2016_Q2),
+  year_quarter == 2016.3 ~ cost*(inflation_2022_Q4/inflation_2016_Q3),
+  year_quarter == 2016.4 ~ cost*(inflation_2022_Q4/inflation_2016_Q4), 
+  year_quarter == 2017.1 ~ cost*(inflation_2022_Q4/inflation_2017_Q1), 
+  year_quarter == 2017.2 ~ cost*(inflation_2022_Q4/inflation_2017_Q2),
+  year_quarter == 2017.3 ~ cost*(inflation_2022_Q4/inflation_2017_Q3),
+  year_quarter == 2017.4 ~ cost*(inflation_2022_Q4/inflation_2017_Q4), 
+  year_quarter == 2018.1 ~ cost*(inflation_2022_Q4/inflation_2018_Q1), 
+  year_quarter == 2018.2 ~ cost*(inflation_2022_Q4/inflation_2018_Q2),
+  year_quarter == 2018.3 ~ cost*(inflation_2022_Q4/inflation_2018_Q3),
+  year_quarter == 2018.4 ~ cost*(inflation_2022_Q4/inflation_2018_Q4), 
+  year_quarter == 2019.1 ~ cost*(inflation_2022_Q4/inflation_2019_Q1), 
+  year_quarter == 2019.2 ~ cost*(inflation_2022_Q4/inflation_2019_Q2),
+  year_quarter == 2019.3 ~ cost*(inflation_2022_Q4/inflation_2019_Q3),
+  year_quarter == 2019.4 ~ cost*(inflation_2022_Q4/inflation_2019_Q4),
+  year_quarter == 2020.1 ~ cost*(inflation_2022_Q4/inflation_2020_Q1), 
+  year_quarter == 2020.2 ~ cost*(inflation_2022_Q4/inflation_2020_Q2),
+  year_quarter == 2020.3 ~ cost*(inflation_2022_Q4/inflation_2020_Q3),
+  year_quarter == 2020.4 ~ cost*(inflation_2022_Q4/inflation_2020_Q4),
+  year_quarter == 2021.1 ~ cost*(inflation_2022_Q4/inflation_2021_Q1), 
+  year_quarter == 2021.2 ~ cost*(inflation_2022_Q4/inflation_2021_Q2),
+  year_quarter == 2021.3 ~ cost*(inflation_2022_Q4/inflation_2021_Q3),
+  year_quarter == 2021.4 ~ cost*(inflation_2022_Q4/inflation_2021_Q4),
+  year_quarter == 2022.1 ~ cost*(inflation_2022_Q4/inflation_2022_Q1), 
+  year_quarter == 2022.2 ~ cost*(inflation_2022_Q4/inflation_2022_Q2),
+  year_quarter == 2022.3 ~ cost*(inflation_2022_Q4/inflation_2022_Q3),
+  year_quarter == 2022.4 ~ cost*(inflation_2022_Q4/inflation_2022_Q4))  
+  ) %>% 
+    collect()
+
+
+
+
+# Healthcare resource utilization  
+CPA_tumor_resection_healthcare_utilization <- inflation_adjusted_CPA_tumor_resection_utilization %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+CPA_tumor_resection_healthcare_utilization
+
+
+CPA_tumor_resection_healthcare_utilization_monitoring <- inflation_adjusted_CPA_tumor_resection_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+CPA_tumor_resection_healthcare_utilization_monitoring
+
+
+CPA_tumor_resection_healthcare_utilization_no_monitoring <- inflation_adjusted_CPA_tumor_resection_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+CPA_tumor_resection_healthcare_utilization_no_monitoring
+
+
+CPA_tumor_resection_healthcare_utilization_monitoring_data <- inflation_adjusted_CPA_tumor_resection_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  collect()
+
+
+CPA_tumor_resection_healthcare_utilization_no_monitoring_data <- inflation_adjusted_CPA_tumor_resection_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  collect()
+
+
+wilcox.test(CPA_tumor_resection_healthcare_utilization_monitoring_data$total_LOS, CPA_tumor_resection_healthcare_utilization_no_monitoring_data$total_LOS, alternative="two.sided", paired=FALSE)
+
+wilcox.test(CPA_tumor_resection_healthcare_utilization_monitoring_data$cost, CPA_tumor_resection_healthcare_utilization_no_monitoring_data$cost, alternative="two.sided", paired=FALSE)
+
+
+
+  
+# Regression on cerebellopontine angle tumor resection utilization: length of stay
+CPA_tumor_resection_utilization_zero_truncated_negative_binomial_regression_LOS <- vglm(formula = total_LOS ~ any_monitoring_numeric + AGE + male +  year_surgery + CPA_tumor_resection_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_CPA_tumor_resection_utilization, family = posnegbinomial)
+
+summary(CPA_tumor_resection_utilization_zero_truncated_negative_binomial_regression_LOS)
+
+exp(cbind(coef(CPA_tumor_resection_utilization_zero_truncated_negative_binomial_regression_LOS), confint(CPA_tumor_resection_utilization_zero_truncated_negative_binomial_regression_LOS)))
+
+
+
+
+# Regression on cerebellopontine angle tumor resection utilization: cost
+CPA_tumor_resection_utilization_linear_regression_cost <- lm(formula = cost ~ any_monitoring_numeric + AGE + male +  year_surgery + CPA_tumor_resection_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_CPA_tumor_resection_utilization)
+
+summary(CPA_tumor_resection_utilization_linear_regression_cost)
+
+cbind(coef(CPA_tumor_resection_utilization_linear_regression_cost), confint(CPA_tumor_resection_utilization_linear_regression_cost))
+```
+
+
+
+
 
 
 
@@ -2247,6 +2694,449 @@ carotid_endarterectomy_monitoring_results_by_year_plot
 
 
 
+Healthcare resource utilization among patients with carotid endarterectomy
+```{r}
+# Health care resource utilization
+
+carotid_endarterectomy_utilization_2006_i <- ms_i_2006 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2007#################################
+carotid_endarterectomy_utilization_2007_i <- ms_i_2007 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2008#################################
+carotid_endarterectomy_utilization_2008_i <- ms_i_2008 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2009#################################
+carotid_endarterectomy_utilization_2009_i <- ms_i_2009 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2010#################################
+carotid_endarterectomy_utilization_2010_i <- ms_i_2010 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2011#################################
+carotid_endarterectomy_utilization_2011_i <- ms_i_2011 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2012#################################
+carotid_endarterectomy_utilization_2012_i <- ms_i_2012 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2013#################################
+carotid_endarterectomy_utilization_2013_i <- ms_i_2013 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2014#################################
+carotid_endarterectomy_utilization_2014_i <- ms_i_2014 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2015#################################
+carotid_endarterectomy_utilization_2015_i <- ms_i_2015 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2016#################################
+carotid_endarterectomy_utilization_2016_i <- ms_i_2016 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2017#################################
+carotid_endarterectomy_utilization_2017_i <- ms_i_2017 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2018#################################
+carotid_endarterectomy_utilization_2018_i <- ms_i_2018 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2019#################################
+carotid_endarterectomy_utilization_2019_i <- ms_i_2019 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2020#################################
+carotid_endarterectomy_utilization_2020_i <- ms_i_2020 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2021#################################
+carotid_endarterectomy_utilization_2021_i <- ms_i_2021 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2022#################################
+carotid_endarterectomy_utilization_2022_i <- ms_i_2022 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!carotid_endarterectomy_EEG_SSEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+
+
+# Utilization
+carotid_endarterectomy_utilization <- bind_rows(carotid_endarterectomy_utilization_2006_i, carotid_endarterectomy_utilization_2007_i, carotid_endarterectomy_utilization_2008_i, carotid_endarterectomy_utilization_2009_i, carotid_endarterectomy_utilization_2010_i, carotid_endarterectomy_utilization_2011_i, carotid_endarterectomy_utilization_2012_i, carotid_endarterectomy_utilization_2013_i, carotid_endarterectomy_utilization_2014_i, carotid_endarterectomy_utilization_2015_i, carotid_endarterectomy_utilization_2016_i, carotid_endarterectomy_utilization_2017_i, carotid_endarterectomy_utilization_2018_i, carotid_endarterectomy_utilization_2019_i, carotid_endarterectomy_utilization_2020_i, carotid_endarterectomy_utilization_2021_i, carotid_endarterectomy_utilization_2022_i) %>% 
+  mutate(across(ENROLID, as.numeric)) %>% 
+  filter(ENROLID>0) %>%    
+  arrange(ENROLID, ADMDATE) %>% 
+  right_join(carotid_endarterectomy_EEG_SSEP_demographics, by="ENROLID") %>% 
+  arrange(ENROLID, ADMDATE) %>%
+  rowwise() %>% 
+  mutate(surgery_within_the_admission = case_when(
+    (SVCDATE %in% as.Date(ADMDATE : (ADMDATE + DAYS))) ~ "yes",
+    TRUE ~ "no"
+  )) %>% 
+  ungroup() %>% 
+  filter(surgery_within_the_admission=="yes") %>% 
+  rename(LOS=DAYS) %>% 
+  group_by(ENROLID, ADMDATE) %>% 
+  mutate(cost=sum(TOTPAY)) %>% 
+  mutate(total_LOS=sum(LOS)) %>% 
+  ungroup() %>% 
+  select(ENROLID, ADMDATE, SVCDATE, total_LOS, cost, any_monitoring_numeric, AGE, male, year_surgery, carotid_endarterectomy_type, rural, region_category, employment_status_category, employment_class_category) %>% 
+  collect()
+  
+  
+
+
+# Inflation calculations (https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&categories=survey&_gl=1*1piml3m*_ga*NDg1MDgzODA2LjE3MDg0OTgxMjg.*_ga_J4698JNNFT*MTcwODQ5ODQ5Mi4xLjEuMTcwODQ5ODUzNi4xNi4wLjA.#eyJhcHBpZCI6MTksInN0ZXBzIjpbMSwyLDMsM10sImRhdGEiOltbImNhdGVnb3JpZXMiLCJTdXJ2ZXkiXSxbIk5JUEFfVGFibGVfTGlzdCIsIjQiXSxbIkZpcnN0X1llYXIiLCIyMDA2Il0sWyJMYXN0X1llYXIiLCIyMDIyIl0sWyJTY2FsZSIsIjAiXSxbIlNlcmllcyIsIlEiXV19 Last accessed 2/11/2024)
+# https://meps.ahrq.gov/about_meps/Price_Index.shtml
+inflation_2006_Q1 <- 0.83135
+inflation_2006_Q2 <- 0.83871	
+inflation_2006_Q3 <- 0.84486	
+inflation_2006_Q4 <- 0.84806
+inflation_2007_Q1 <- 0.85655
+inflation_2007_Q2 <- 0.86201	
+inflation_2007_Q3 <- 0.86568	
+inflation_2007_Q4 <- 0.86982	
+inflation_2008_Q1 <- 0.87359
+inflation_2008_Q2 <- 0.87678	
+inflation_2008_Q3 <- 0.88361	
+inflation_2008_Q4 <- 0.88511
+inflation_2009_Q1 <- 0.88536
+inflation_2009_Q2 <- 0.88418	
+inflation_2009_Q3 <- 0.88474	
+inflation_2009_Q4 <- 0.88798	
+inflation_2010_Q1 <- 0.89018	
+inflation_2010_Q2 <- 0.89431	
+inflation_2010_Q3 <- 0.89755			
+inflation_2010_Q4 <- 0.90270			
+inflation_2011_Q1 <- 0.90710
+inflation_2011_Q2 <- 0.91363	
+inflation_2011_Q3 <- 0.91840	
+inflation_2011_Q4 <- 0.91951	
+inflation_2012_Q1 <- 0.92495	
+inflation_2012_Q2 <- 0.92881	
+inflation_2012_Q3 <- 0.93459
+inflation_2012_Q4 <- 0.93869	
+inflation_2013_Q1 <- 0.94204
+inflation_2013_Q2 <- 0.94474
+inflation_2013_Q3 <- 0.94989
+inflation_2013_Q4 <- 0.95477		
+inflation_2014_Q1 <- 0.95840
+inflation_2014_Q2 <- 0.96343	
+inflation_2014_Q3 <- 0.96762
+inflation_2014_Q4 <- 0.96800		
+inflation_2015_Q1 <- 0.96742
+inflation_2015_Q2 <- 0.97302	
+inflation_2015_Q3 <- 0.97536
+inflation_2015_Q4 <- 0.97527
+inflation_2016_Q1 <- 0.97468	
+inflation_2016_Q2 <- 0.98108	
+inflation_2016_Q3 <- 0.98372
+inflation_2016_Q4 <- 0.98884
+inflation_2017_Q1 <- 0.99389
+inflation_2017_Q2 <- 0.99656		
+inflation_2017_Q3 <- 1.00174
+inflation_2017_Q4 <- 1.00780	
+inflation_2018_Q1 <- 1.01428	
+inflation_2018_Q2 <- 1.02140		
+inflation_2018_Q3 <- 1.02586
+inflation_2018_Q4 <- 1.03005		
+inflation_2019_Q1 <- 1.03375	
+inflation_2019_Q2 <- 1.03878		
+inflation_2019_Q3 <- 1.04213
+inflation_2019_Q4 <- 1.04566	
+inflation_2020_Q1 <- 1.05042
+inflation_2020_Q2 <- 1.04661		
+inflation_2020_Q3 <- 1.05593
+inflation_2020_Q4 <- 1.06330
+inflation_2021_Q1 <- 1.07731		
+inflation_2021_Q2 <- 1.09332		
+inflation_2021_Q3 <- 1.10957
+inflation_2021_Q4 <- 1.12858
+inflation_2022_Q1 <- 1.15182		
+inflation_2022_Q2 <- 1.17704			
+inflation_2022_Q3 <- 1.18980
+inflation_2022_Q4 <- 1.20115
+
+
+# Cost adjusted for inflation (to Q4 2022 year)
+inflation_adjusted_carotid_endarterectomy_utilization <- carotid_endarterectomy_utilization %>% 
+  mutate(year_quarter = quarter(SVCDATE, with_year=TRUE)) %>%
+  mutate(
+    cost = case_when(
+  year_quarter == 2006.1 ~ cost*(inflation_2022_Q4/inflation_2006_Q1), 
+  year_quarter == 2006.2 ~ cost*(inflation_2022_Q4/inflation_2006_Q2),
+  year_quarter == 2006.3 ~ cost*(inflation_2022_Q4/inflation_2006_Q3),
+  year_quarter == 2006.4 ~ cost*(inflation_2022_Q4/inflation_2006_Q4),  
+  year_quarter == 2007.1 ~ cost*(inflation_2022_Q4/inflation_2007_Q1), 
+  year_quarter == 2007.2 ~ cost*(inflation_2022_Q4/inflation_2007_Q2),
+  year_quarter == 2007.3 ~ cost*(inflation_2022_Q4/inflation_2007_Q3),
+  year_quarter == 2007.4 ~ cost*(inflation_2022_Q4/inflation_2007_Q4),  
+  year_quarter == 2008.1 ~ cost*(inflation_2022_Q4/inflation_2008_Q1), 
+  year_quarter == 2008.2 ~ cost*(inflation_2022_Q4/inflation_2008_Q2),
+  year_quarter == 2008.3 ~ cost*(inflation_2022_Q4/inflation_2008_Q3),
+  year_quarter == 2008.4 ~ cost*(inflation_2022_Q4/inflation_2008_Q4), 
+  year_quarter == 2009.1 ~ cost*(inflation_2022_Q4/inflation_2009_Q1), 
+  year_quarter == 2009.2 ~ cost*(inflation_2022_Q4/inflation_2009_Q2),
+  year_quarter == 2009.3 ~ cost*(inflation_2022_Q4/inflation_2009_Q3),
+  year_quarter == 2009.4 ~ cost*(inflation_2022_Q4/inflation_2009_Q4), 
+  year_quarter == 2010.1 ~ cost*(inflation_2022_Q4/inflation_2010_Q1), 
+  year_quarter == 2010.2 ~ cost*(inflation_2022_Q4/inflation_2010_Q2),
+  year_quarter == 2010.3 ~ cost*(inflation_2022_Q4/inflation_2010_Q3),
+  year_quarter == 2010.4 ~ cost*(inflation_2022_Q4/inflation_2010_Q4), 
+  year_quarter == 2011.1 ~ cost*(inflation_2022_Q4/inflation_2011_Q1), 
+  year_quarter == 2011.2 ~ cost*(inflation_2022_Q4/inflation_2011_Q2),
+  year_quarter == 2011.3 ~ cost*(inflation_2022_Q4/inflation_2011_Q3),
+  year_quarter == 2011.4 ~ cost*(inflation_2022_Q4/inflation_2011_Q4), 
+  year_quarter == 2012.1 ~ cost*(inflation_2022_Q4/inflation_2012_Q1), 
+  year_quarter == 2012.2 ~ cost*(inflation_2022_Q4/inflation_2012_Q2),
+  year_quarter == 2012.3 ~ cost*(inflation_2022_Q4/inflation_2012_Q3),
+  year_quarter == 2012.4 ~ cost*(inflation_2022_Q4/inflation_2012_Q4), 
+  year_quarter == 2013.1 ~ cost*(inflation_2022_Q4/inflation_2013_Q1), 
+  year_quarter == 2013.2 ~ cost*(inflation_2022_Q4/inflation_2013_Q2),
+  year_quarter == 2013.3 ~ cost*(inflation_2022_Q4/inflation_2013_Q3),
+  year_quarter == 2013.4 ~ cost*(inflation_2022_Q4/inflation_2013_Q4), 
+  year_quarter == 2014.1 ~ cost*(inflation_2022_Q4/inflation_2014_Q1), 
+  year_quarter == 2014.2 ~ cost*(inflation_2022_Q4/inflation_2014_Q2),
+  year_quarter == 2014.3 ~ cost*(inflation_2022_Q4/inflation_2014_Q3),
+  year_quarter == 2014.4 ~ cost*(inflation_2022_Q4/inflation_2014_Q4),  
+  year_quarter == 2015.1 ~ cost*(inflation_2022_Q4/inflation_2015_Q1), 
+  year_quarter == 2015.2 ~ cost*(inflation_2022_Q4/inflation_2015_Q2),
+  year_quarter == 2015.3 ~ cost*(inflation_2022_Q4/inflation_2015_Q3),
+  year_quarter == 2015.4 ~ cost*(inflation_2022_Q4/inflation_2015_Q4),  
+  year_quarter == 2016.1 ~ cost*(inflation_2022_Q4/inflation_2016_Q1), 
+  year_quarter == 2016.2 ~ cost*(inflation_2022_Q4/inflation_2016_Q2),
+  year_quarter == 2016.3 ~ cost*(inflation_2022_Q4/inflation_2016_Q3),
+  year_quarter == 2016.4 ~ cost*(inflation_2022_Q4/inflation_2016_Q4), 
+  year_quarter == 2017.1 ~ cost*(inflation_2022_Q4/inflation_2017_Q1), 
+  year_quarter == 2017.2 ~ cost*(inflation_2022_Q4/inflation_2017_Q2),
+  year_quarter == 2017.3 ~ cost*(inflation_2022_Q4/inflation_2017_Q3),
+  year_quarter == 2017.4 ~ cost*(inflation_2022_Q4/inflation_2017_Q4), 
+  year_quarter == 2018.1 ~ cost*(inflation_2022_Q4/inflation_2018_Q1), 
+  year_quarter == 2018.2 ~ cost*(inflation_2022_Q4/inflation_2018_Q2),
+  year_quarter == 2018.3 ~ cost*(inflation_2022_Q4/inflation_2018_Q3),
+  year_quarter == 2018.4 ~ cost*(inflation_2022_Q4/inflation_2018_Q4), 
+  year_quarter == 2019.1 ~ cost*(inflation_2022_Q4/inflation_2019_Q1), 
+  year_quarter == 2019.2 ~ cost*(inflation_2022_Q4/inflation_2019_Q2),
+  year_quarter == 2019.3 ~ cost*(inflation_2022_Q4/inflation_2019_Q3),
+  year_quarter == 2019.4 ~ cost*(inflation_2022_Q4/inflation_2019_Q4),
+  year_quarter == 2020.1 ~ cost*(inflation_2022_Q4/inflation_2020_Q1), 
+  year_quarter == 2020.2 ~ cost*(inflation_2022_Q4/inflation_2020_Q2),
+  year_quarter == 2020.3 ~ cost*(inflation_2022_Q4/inflation_2020_Q3),
+  year_quarter == 2020.4 ~ cost*(inflation_2022_Q4/inflation_2020_Q4),
+  year_quarter == 2021.1 ~ cost*(inflation_2022_Q4/inflation_2021_Q1), 
+  year_quarter == 2021.2 ~ cost*(inflation_2022_Q4/inflation_2021_Q2),
+  year_quarter == 2021.3 ~ cost*(inflation_2022_Q4/inflation_2021_Q3),
+  year_quarter == 2021.4 ~ cost*(inflation_2022_Q4/inflation_2021_Q4),
+  year_quarter == 2022.1 ~ cost*(inflation_2022_Q4/inflation_2022_Q1), 
+  year_quarter == 2022.2 ~ cost*(inflation_2022_Q4/inflation_2022_Q2),
+  year_quarter == 2022.3 ~ cost*(inflation_2022_Q4/inflation_2022_Q3),
+  year_quarter == 2022.4 ~ cost*(inflation_2022_Q4/inflation_2022_Q4))  
+  ) %>% 
+    collect()
+
+
+
+
+# Healthcare resource utilization  
+carotid_endarterectomy_healthcare_utilization <- inflation_adjusted_carotid_endarterectomy_utilization %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+carotid_endarterectomy_healthcare_utilization
+
+
+carotid_endarterectomy_healthcare_utilization_monitoring <- inflation_adjusted_carotid_endarterectomy_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+carotid_endarterectomy_healthcare_utilization_monitoring
+
+
+carotid_endarterectomy_healthcare_utilization_no_monitoring <- inflation_adjusted_carotid_endarterectomy_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+carotid_endarterectomy_healthcare_utilization_no_monitoring
+
+
+carotid_endarterectomy_healthcare_utilization_monitoring_data <- inflation_adjusted_carotid_endarterectomy_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  collect()
+
+
+carotid_endarterectomy_healthcare_utilization_no_monitoring_data <- inflation_adjusted_carotid_endarterectomy_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  collect()
+
+
+wilcox.test(carotid_endarterectomy_healthcare_utilization_monitoring_data$total_LOS, carotid_endarterectomy_healthcare_utilization_no_monitoring_data$total_LOS, alternative="two.sided", paired=FALSE)
+
+wilcox.test(carotid_endarterectomy_healthcare_utilization_monitoring_data$cost, carotid_endarterectomy_healthcare_utilization_no_monitoring_data$cost, alternative="two.sided", paired=FALSE)
+
+
+
+  
+# Regression on carotid endarterectomy utilization: length of stay
+carotid_endarterectomy_utilization_zero_truncated_negative_binomial_regression_LOS <- vglm(formula = total_LOS ~ any_monitoring_numeric + AGE + male +  year_surgery + carotid_endarterectomy_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_carotid_endarterectomy_utilization, family = posnegbinomial)
+
+summary(carotid_endarterectomy_utilization_zero_truncated_negative_binomial_regression_LOS)
+
+exp(cbind(coef(carotid_endarterectomy_utilization_zero_truncated_negative_binomial_regression_LOS), confint(carotid_endarterectomy_utilization_zero_truncated_negative_binomial_regression_LOS)))
+
+
+
+
+# Regression on carotid endarterectomy utilization: cost
+carotid_endarterectomy_utilization_linear_regression_cost <- lm(formula = cost ~ any_monitoring_numeric + AGE + male +  year_surgery + carotid_endarterectomy_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_carotid_endarterectomy_utilization)
+
+summary(carotid_endarterectomy_utilization_linear_regression_cost)
+
+cbind(coef(carotid_endarterectomy_utilization_linear_regression_cost), confint(carotid_endarterectomy_utilization_linear_regression_cost))
+```
+
+
+
+
 
 
 
@@ -2261,14 +3151,39 @@ Identify patients with spinal fusion
 # Codes for patients with spinal fusion
 CPT_code_spinal_fusion <- c("22800", "22802", "22804", "22808", "22810", "22812")
 
+CPT_code_cervical_spine <- c("22548", "22551", "22552", "22554", "22590", "22595", "22600")
+
+CPT_code_thoracic_spine <- c("22532", "22556", "22610")
+
+CPT_code_lumbar_spine <- c("22533", "22558", "22586", "22612", "22630", "22632", "22633", "22634")
+
+
+
 
 
 
 # Patients with spinal fusion
 
 #################################2006#################################
+episodes_of_spinal_fusion_2006_s <- ms_s_2006 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2006_s <- ms_s_2006 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2006_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2006_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2276,14 +3191,31 @@ spinal_fusion_2006_s <- ms_s_2006 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2007#################################
+episodes_of_spinal_fusion_2007_s <- ms_s_2007 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2007_s <- ms_s_2007 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2007_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2007_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2291,14 +3223,31 @@ spinal_fusion_2007_s <- ms_s_2007 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2008#################################
+episodes_of_spinal_fusion_2008_s <- ms_s_2008 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2008_s <- ms_s_2008 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2008_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2008_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2306,14 +3255,31 @@ spinal_fusion_2008_s <- ms_s_2008 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2009#################################
+episodes_of_spinal_fusion_2009_s <- ms_s_2009 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2009_s <- ms_s_2009 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2009_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2009_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2321,14 +3287,31 @@ spinal_fusion_2009_s <- ms_s_2009 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2010#################################
+episodes_of_spinal_fusion_2010_s <- ms_s_2010 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2010_s <- ms_s_2010 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2010_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2010_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2336,14 +3319,31 @@ spinal_fusion_2010_s <- ms_s_2010 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2011#################################
+episodes_of_spinal_fusion_2011_s <- ms_s_2011 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2011_s <- ms_s_2011 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2011_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2011_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2351,14 +3351,31 @@ spinal_fusion_2011_s <- ms_s_2011 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2012#################################
+episodes_of_spinal_fusion_2012_s <- ms_s_2012 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2012_s <- ms_s_2012 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2012_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2012_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2366,14 +3383,31 @@ spinal_fusion_2012_s <- ms_s_2012 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2013#################################
+episodes_of_spinal_fusion_2013_s <- ms_s_2013 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2013_s <- ms_s_2013 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2013_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2013_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2381,14 +3415,31 @@ spinal_fusion_2013_s <- ms_s_2013 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2014#################################
+episodes_of_spinal_fusion_2014_s <- ms_s_2014 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2014_s <- ms_s_2014 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2014_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2014_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2396,14 +3447,31 @@ spinal_fusion_2014_s <- ms_s_2014 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2015#################################
+episodes_of_spinal_fusion_2015_s <- ms_s_2015 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2015_s <- ms_s_2015 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2015_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2015_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2411,14 +3479,31 @@ spinal_fusion_2015_s <- ms_s_2015 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2016#################################
+episodes_of_spinal_fusion_2016_s <- ms_s_2016 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2016_s <- ms_s_2016 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2016_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2016_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2426,14 +3511,31 @@ spinal_fusion_2016_s <- ms_s_2016 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2017#################################
+episodes_of_spinal_fusion_2017_s <- ms_s_2017 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2017_s <- ms_s_2017 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2017_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2017_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2441,14 +3543,31 @@ spinal_fusion_2017_s <- ms_s_2017 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2018#################################
+episodes_of_spinal_fusion_2018_s <- ms_s_2018 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2018_s <- ms_s_2018 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2018_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2018_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2456,14 +3575,31 @@ spinal_fusion_2018_s <- ms_s_2018 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2019#################################
+episodes_of_spinal_fusion_2019_s <- ms_s_2019 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2019_s <- ms_s_2019 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2019_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2019_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2471,14 +3607,31 @@ spinal_fusion_2019_s <- ms_s_2019 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2020#################################
+episodes_of_spinal_fusion_2020_s <- ms_s_2020 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2020_s <- ms_s_2020 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2020_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2020_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2486,14 +3639,31 @@ spinal_fusion_2020_s <- ms_s_2020 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2021#################################
+episodes_of_spinal_fusion_2021_s <- ms_s_2021 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2021_s <- ms_s_2021 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2021_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2021_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2501,14 +3671,31 @@ spinal_fusion_2021_s <- ms_s_2021 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
 
 
 #################################2022#################################
+episodes_of_spinal_fusion_2022_s <- ms_s_2022 %>% 
+  filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>%
+  select(ENROLID, SVCDATE) %>% 
+  collect()
+
 spinal_fusion_2022_s <- ms_s_2022 %>% 
   select(ENROLID, AGE, SEX, DX1, SVCDATE, PROC1, PROCTYP) %>% 
+  filter((ENROLID %in% !!episodes_of_spinal_fusion_2022_s$ENROLID) & (SVCDATE %in% !!episodes_of_spinal_fusion_2022_s$SVCDATE)) %>% 
+  group_by(ENROLID, SVCDATE) %>% 
+  mutate(cervical = case_when(
+    any((PROC1 %in% CPT_code_cervical_spine) & (PROCTYP=="1")) ~ "cervical",
+    TRUE ~ "not cervical")) %>% 
+  mutate(thoracic = case_when(
+    any((PROC1 %in% CPT_code_thoracic_spine) & (PROCTYP=="1")) ~ "thoracic",
+    TRUE ~ "not thoracic")) %>% 
+  mutate(lumbar = case_when(
+    any((PROC1 %in% CPT_code_lumbar_spine) & (PROCTYP=="1")) ~ "lumbar",
+    TRUE ~ "not lumbar")) %>% 
+  ungroup() %>% 
   filter((PROC1 %in% CPT_code_spinal_fusion) & (PROCTYP=="1")) %>% 
   mutate(spinal_fusion_type = case_when(
     (PROC1 == "22800" | PROC1 == "22802" | PROC1 == "22804") ~ "posterior",
@@ -2516,11 +3703,9 @@ spinal_fusion_2022_s <- ms_s_2022 %>%
   mutate(across(c(ENROLID, AGE), as.numeric)) %>%
   filter(ENROLID>0) %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>%
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type) %>% 
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar) %>% 
   collect() %>% 
   mutate(across(SVCDATE, mdy))
-
-
 
 
 
@@ -2569,7 +3754,7 @@ spinal_fusion_SSEP_MEP_EMG_2006 <- ms_s_2006 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
   
 
 #################################2007#################################
@@ -2593,7 +3778,7 @@ spinal_fusion_SSEP_MEP_EMG_2007 <- ms_s_2007 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2008#################################
@@ -2617,7 +3802,7 @@ spinal_fusion_SSEP_MEP_EMG_2008 <- ms_s_2008 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2009#################################
@@ -2641,7 +3826,7 @@ spinal_fusion_SSEP_MEP_EMG_2009 <- ms_s_2009 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2010#################################
@@ -2665,7 +3850,7 @@ spinal_fusion_SSEP_MEP_EMG_2010 <- ms_s_2010 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2011#################################
@@ -2689,7 +3874,7 @@ spinal_fusion_SSEP_MEP_EMG_2011 <- ms_s_2011 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2012#################################
@@ -2713,7 +3898,7 @@ spinal_fusion_SSEP_MEP_EMG_2012 <- ms_s_2012 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2013#################################
@@ -2737,7 +3922,7 @@ spinal_fusion_SSEP_MEP_EMG_2013 <- ms_s_2013 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2014#################################
@@ -2761,7 +3946,7 @@ spinal_fusion_SSEP_MEP_EMG_2014 <- ms_s_2014 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2015#################################
@@ -2785,7 +3970,7 @@ spinal_fusion_SSEP_MEP_EMG_2015 <- ms_s_2015 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2016#################################
@@ -2809,7 +3994,7 @@ spinal_fusion_SSEP_MEP_EMG_2016 <- ms_s_2016 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2017#################################
@@ -2833,7 +4018,7 @@ spinal_fusion_SSEP_MEP_EMG_2017 <- ms_s_2017 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2018#################################
@@ -2857,7 +4042,7 @@ spinal_fusion_SSEP_MEP_EMG_2018 <- ms_s_2018 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2019#################################
@@ -2881,7 +4066,7 @@ spinal_fusion_SSEP_MEP_EMG_2019 <- ms_s_2019 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2020#################################
@@ -2905,7 +4090,7 @@ spinal_fusion_SSEP_MEP_EMG_2020 <- ms_s_2020 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2021#################################
@@ -2929,7 +4114,7 @@ spinal_fusion_SSEP_MEP_EMG_2021 <- ms_s_2021 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 #################################2022#################################
@@ -2953,7 +4138,7 @@ spinal_fusion_SSEP_MEP_EMG_2022 <- ms_s_2022 %>%
     TRUE ~ "No EMG")) %>% 
   ungroup() %>% 
   distinct(ENROLID, SVCDATE, .keep_all=TRUE) %>% 
-  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, AGE, SEX, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 
 
 
@@ -3157,7 +4342,7 @@ spinal_fusion_SSEP_MEP_EMG_demographics <- spinal_fusion_SSEP_MEP_EMG %>%
   mutate(any_monitoring_numeric = case_when(
     any_monitoring == "monitoring" ~ 1,
     TRUE ~ 0)) %>% 
-  select(ENROLID, SVCDATE, any_monitoring, any_monitoring_numeric, AGE, male, year_surgery, rural, region_category, employment_class_category, employment_status_category, spinal_fusion_type, SSEP, MEP, EMG)
+  select(ENROLID, SVCDATE, any_monitoring, any_monitoring_numeric, AGE, male, year_surgery, rural, region_category, employment_class_category, employment_status_category, spinal_fusion_type, cervical, thoracic, lumbar, SSEP, MEP, EMG)
 ```
 
 
@@ -3249,11 +4434,67 @@ spinal_fusion_surgery_type <- spinal_fusion_SSEP_MEP_EMG_demographics %>%
 )
 
 
+# Proportion of surgeries with region information
+spinal_fusion_region_information <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  mutate(region_information = case_when(
+    (cervical == "cervical" | thoracic == "thoracic" | lumbar == "lumbar") ~ "information",
+    TRUE ~ "no information"
+  )) %>% 
+  reframe(
+    spinal_region_information = CrossTable(region_information)
+  )
+
+
+# Spinal fusion cervical
+spinal_fusion_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  reframe(
+  cervical = CrossTable(cervical)
+)
+
+
+# Spinal fusion cervical anterior or posterior
+spinal_fusion_cervical_anterior_posterior <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  reframe(
+  cervical_anterior_posterior = CrossTable(cervical, spinal_fusion_type)
+)
+
+
+# Spinal fusion thoracic
+spinal_fusion_thoracic <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  reframe(
+  thoracic = CrossTable(thoracic)
+)
+
+
+# Spinal fusion lumbar
+spinal_fusion_lumbar <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  reframe(
+  lumbar = CrossTable(lumbar)
+)
+
+
 # Spinal fusion monitoring
 spinal_fusion_monitoring_results <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
   select(SSEP, MEP, EMG) %>% 
   ftable()
 spinal_fusion_monitoring_results
+
+
+# Spinal fusion monitoring: anterior cervical
+spinal_fusion_monitoring_results_anterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="anterior") %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_anterior_cervical
+
+
+# Spinal fusion monitoring: posterior cervical
+spinal_fusion_monitoring_results_posterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="posterior") %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_posterior_cervical
+
 
 
 # Regression on spinal fusion monitoring 
@@ -3321,6 +4562,689 @@ spinal_fusion_monitoring_results_by_year_plot <- ggplot(data=spinal_fusion_monit
   scale_x_continuous(name="Year", breaks=2006:2022) +
   scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
 spinal_fusion_monitoring_results_by_year_plot
+
+
+
+    
+
+    
+# Spinal fusion monitoring by year: anterior cervical
+spinal_fusion_monitoring_results_by_year_anterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="anterior") %>% 
+  group_by(year(SVCDATE)) %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_by_year_anterior_cervical
+
+
+spinal_fusion_monitoring_results_by_year_database_anterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="anterior") %>% 
+  filter(SVCDATE < as.Date("2023-1-1")) %>% 
+  mutate(
+    number_any_monitoring = case_when(
+      any_monitoring == "monitoring" ~ 1,
+      TRUE ~ 0),
+    number_SSEP = case_when(
+      SSEP == "SSEP" ~ 1,
+      TRUE ~ 0),
+    number_MEP = case_when(
+      MEP == "MEP" ~ 1,
+      TRUE ~ 0),
+    number_EMG = case_when(
+      EMG == "EMG" ~ 1,
+      TRUE ~ 0)    
+  ) %>% 
+  group_by(year(SVCDATE)) %>% 
+  summarize(
+    count_any_monitoring = sum(number_any_monitoring),
+    proportion_any_monitoring = count_any_monitoring / n(),
+    count_SSEP = sum(number_SSEP),
+    proportion_SSEP = count_SSEP / n(),
+    count_MEP = sum(number_MEP),
+    proportion_MEP = count_MEP / n(),
+    count_EMG = sum(number_EMG),
+    proportion_EMG = count_EMG / n(),
+    total_patients = n()
+  ) %>% 
+  collect()
+spinal_fusion_monitoring_results_by_year_database_anterior_cervical
+
+
+# Proportion of patients with monitoring per year figure: anterior cervical
+spinal_fusion_monitoring_results_by_year_plot_anterior_cervical <- ggplot(data=spinal_fusion_monitoring_results_by_year_database_anterior_cervical) +
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_any_monitoring), lwd=1.5, color="darkgreen") +   
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_SSEP), lwd=1.5, color="red") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_MEP), lwd=1.5, color="blue") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_EMG), lwd=1.5, color="darkorange") + 
+  theme(legend.position="none", panel.background=element_blank(), panel.grid.major=element_blank(), panel.grid.minor=element_blank(), panel.border=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_text(size=14, face="bold"), axis.text.x=element_text(angle=45, hjust=1),
+        axis.title=element_text(size=20, face="bold")) +
+  scale_x_continuous(name="Year", breaks=2006:2022) +
+  scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
+spinal_fusion_monitoring_results_by_year_plot_anterior_cervical 
+
+
+
+
+
+
+# Spinal fusion monitoring by year: posterior cervical
+spinal_fusion_monitoring_results_by_year_posterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="posterior") %>% 
+  group_by(year(SVCDATE)) %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_by_year_posterior_cervical
+
+
+spinal_fusion_monitoring_results_by_year_database_posterior_cervical <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(cervical=="cervical" & spinal_fusion_type=="posterior") %>% 
+  filter(SVCDATE < as.Date("2023-1-1")) %>% 
+  mutate(
+    number_any_monitoring = case_when(
+      any_monitoring == "monitoring" ~ 1,
+      TRUE ~ 0),
+    number_SSEP = case_when(
+      SSEP == "SSEP" ~ 1,
+      TRUE ~ 0),
+    number_MEP = case_when(
+      MEP == "MEP" ~ 1,
+      TRUE ~ 0),
+    number_EMG = case_when(
+      EMG == "EMG" ~ 1,
+      TRUE ~ 0)    
+  ) %>% 
+  group_by(year(SVCDATE)) %>% 
+  summarize(
+    count_any_monitoring = sum(number_any_monitoring),
+    proportion_any_monitoring = count_any_monitoring / n(),
+    count_SSEP = sum(number_SSEP),
+    proportion_SSEP = count_SSEP / n(),
+    count_MEP = sum(number_MEP),
+    proportion_MEP = count_MEP / n(),
+    count_EMG = sum(number_EMG),
+    proportion_EMG = count_EMG / n(),
+    total_patients = n()
+  ) %>% 
+  collect()
+spinal_fusion_monitoring_results_by_year_database_posterior_cervical
+
+
+# Proportion of patients with monitoring per year figure: posterior cervical
+spinal_fusion_monitoring_results_by_year_plot_posterior_cervical <- ggplot(data=spinal_fusion_monitoring_results_by_year_database_posterior_cervical) +
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_any_monitoring), lwd=1.5, color="darkgreen") +   
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_SSEP), lwd=1.5, color="red") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_MEP), lwd=1.5, color="blue") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_EMG), lwd=1.5, color="darkorange") + 
+  theme(legend.position="none", panel.background=element_blank(), panel.grid.major=element_blank(), panel.grid.minor=element_blank(), panel.border=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_text(size=14, face="bold"), axis.text.x=element_text(angle=45, hjust=1),
+        axis.title=element_text(size=20, face="bold")) +
+  scale_x_continuous(name="Year", breaks=2006:2022) +
+  scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
+spinal_fusion_monitoring_results_by_year_plot_posterior_cervical 
+
+
+
+
+
+
+# Spinal fusion monitoring by year: thoracic
+spinal_fusion_monitoring_results_by_year_thoracic <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(thoracic=="thoracic") %>% 
+  group_by(year(SVCDATE)) %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_by_year_thoracic
+
+
+spinal_fusion_monitoring_results_by_year_database_thoracic <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(thoracic=="thoracic") %>% 
+  filter(SVCDATE < as.Date("2023-1-1")) %>% 
+  mutate(
+    number_any_monitoring = case_when(
+      any_monitoring == "monitoring" ~ 1,
+      TRUE ~ 0),
+    number_SSEP = case_when(
+      SSEP == "SSEP" ~ 1,
+      TRUE ~ 0),
+    number_MEP = case_when(
+      MEP == "MEP" ~ 1,
+      TRUE ~ 0),
+    number_EMG = case_when(
+      EMG == "EMG" ~ 1,
+      TRUE ~ 0)    
+  ) %>% 
+  group_by(year(SVCDATE)) %>% 
+  summarize(
+    count_any_monitoring = sum(number_any_monitoring),
+    proportion_any_monitoring = count_any_monitoring / n(),
+    count_SSEP = sum(number_SSEP),
+    proportion_SSEP = count_SSEP / n(),
+    count_MEP = sum(number_MEP),
+    proportion_MEP = count_MEP / n(),
+    count_EMG = sum(number_EMG),
+    proportion_EMG = count_EMG / n(),
+    total_patients = n()
+  ) %>% 
+  collect()
+spinal_fusion_monitoring_results_by_year_database_thoracic
+
+
+# Proportion of patients with monitoring per year figure: thoracic
+spinal_fusion_monitoring_results_by_year_plot_thoracic <- ggplot(data=spinal_fusion_monitoring_results_by_year_database_thoracic) +
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_any_monitoring), lwd=1.5, color="darkgreen") +   
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_SSEP), lwd=1.5, color="red") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_MEP), lwd=1.5, color="blue") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_EMG), lwd=1.5, color="darkorange") + 
+  theme(legend.position="none", panel.background=element_blank(), panel.grid.major=element_blank(), panel.grid.minor=element_blank(), panel.border=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_text(size=14, face="bold"), axis.text.x=element_text(angle=45, hjust=1),
+        axis.title=element_text(size=20, face="bold")) +
+  scale_x_continuous(name="Year", breaks=2006:2022) +
+  scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
+spinal_fusion_monitoring_results_by_year_plot_thoracic
+
+
+
+
+
+
+# Spinal fusion monitoring by year: lumbar
+spinal_fusion_monitoring_results_by_year_lumbar <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(lumbar=="lumbar") %>% 
+  group_by(year(SVCDATE)) %>% 
+  select(SSEP, MEP, EMG) %>% 
+  ftable()
+spinal_fusion_monitoring_results_by_year_lumbar
+
+
+spinal_fusion_monitoring_results_by_year_database_lumbar <- spinal_fusion_SSEP_MEP_EMG_demographics %>% 
+  filter(lumbar=="lumbar") %>% 
+  filter(SVCDATE < as.Date("2023-1-1")) %>% 
+  mutate(
+    number_any_monitoring = case_when(
+      any_monitoring == "monitoring" ~ 1,
+      TRUE ~ 0),
+    number_SSEP = case_when(
+      SSEP == "SSEP" ~ 1,
+      TRUE ~ 0),
+    number_MEP = case_when(
+      MEP == "MEP" ~ 1,
+      TRUE ~ 0),
+    number_EMG = case_when(
+      EMG == "EMG" ~ 1,
+      TRUE ~ 0)    
+  ) %>% 
+  group_by(year(SVCDATE)) %>% 
+  summarize(
+    count_any_monitoring = sum(number_any_monitoring),
+    proportion_any_monitoring = count_any_monitoring / n(),
+    count_SSEP = sum(number_SSEP),
+    proportion_SSEP = count_SSEP / n(),
+    count_MEP = sum(number_MEP),
+    proportion_MEP = count_MEP / n(),
+    count_EMG = sum(number_EMG),
+    proportion_EMG = count_EMG / n(),
+    total_patients = n()
+  ) %>% 
+  collect()
+spinal_fusion_monitoring_results_by_year_database_lumbar
+
+
+# Proportion of patients with monitoring per year figure: lumbar
+spinal_fusion_monitoring_results_by_year_plot_lumbar <- ggplot(data=spinal_fusion_monitoring_results_by_year_database_lumbar) +
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_any_monitoring), lwd=1.5, color="darkgreen") +   
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_SSEP), lwd=1.5, color="red") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_MEP), lwd=1.5, color="blue") + 
+  geom_line(aes(x=`year(SVCDATE)`, y=proportion_EMG), lwd=1.5, color="darkorange") + 
+  theme(legend.position="none", panel.background=element_blank(), panel.grid.major=element_blank(), panel.grid.minor=element_blank(), panel.border=element_blank(), axis.ticks=element_blank(),
+        axis.text=element_text(size=14, face="bold"), axis.text.x=element_text(angle=45, hjust=1),
+        axis.title=element_text(size=20, face="bold")) +
+  scale_x_continuous(name="Year", breaks=2006:2022) +
+  scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
+spinal_fusion_monitoring_results_by_year_plot_lumbar
+```
+
+
+
+
+Healthcare resource utilization among patients with spinal fusion
+```{r}
+# Health care resource utilization
+#################################2006#################################
+spinal_fusion_utilization_2006_i <- ms_i_2006 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2007#################################
+spinal_fusion_utilization_2007_i <- ms_i_2007 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2008#################################
+spinal_fusion_utilization_2008_i <- ms_i_2008 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2009#################################
+spinal_fusion_utilization_2009_i <- ms_i_2009 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2010#################################
+spinal_fusion_utilization_2010_i <- ms_i_2010 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2011#################################
+spinal_fusion_utilization_2011_i <- ms_i_2011 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2012#################################
+spinal_fusion_utilization_2012_i <- ms_i_2012 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2013#################################
+spinal_fusion_utilization_2013_i <- ms_i_2013 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2014#################################
+spinal_fusion_utilization_2014_i <- ms_i_2014 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2015#################################
+spinal_fusion_utilization_2015_i <- ms_i_2015 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2016#################################
+spinal_fusion_utilization_2016_i <- ms_i_2016 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2017#################################
+spinal_fusion_utilization_2017_i <- ms_i_2017 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2018#################################
+spinal_fusion_utilization_2018_i <- ms_i_2018 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2019#################################
+spinal_fusion_utilization_2019_i <- ms_i_2019 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2020#################################
+spinal_fusion_utilization_2020_i <- ms_i_2020 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2021#################################
+spinal_fusion_utilization_2021_i <- ms_i_2021 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2022#################################
+spinal_fusion_utilization_2022_i <- ms_i_2022 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!spinal_fusion_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+
+
+# Utilization
+spinal_fusion_utilization <- bind_rows(spinal_fusion_utilization_2006_i, spinal_fusion_utilization_2007_i, spinal_fusion_utilization_2008_i, spinal_fusion_utilization_2009_i, spinal_fusion_utilization_2010_i, spinal_fusion_utilization_2011_i, spinal_fusion_utilization_2012_i, spinal_fusion_utilization_2013_i, spinal_fusion_utilization_2014_i, spinal_fusion_utilization_2015_i, spinal_fusion_utilization_2016_i, spinal_fusion_utilization_2017_i, spinal_fusion_utilization_2018_i, spinal_fusion_utilization_2019_i, spinal_fusion_utilization_2020_i, spinal_fusion_utilization_2021_i, spinal_fusion_utilization_2022_i) %>% 
+  mutate(across(ENROLID, as.numeric)) %>% 
+  filter(ENROLID>0) %>%    
+  arrange(ENROLID, ADMDATE) %>% 
+  right_join(spinal_fusion_SSEP_MEP_EMG_demographics, by="ENROLID") %>% 
+  arrange(ENROLID, ADMDATE) %>%
+  rowwise() %>% 
+  mutate(surgery_within_the_admission = case_when(
+    (SVCDATE %in% as.Date(ADMDATE : (ADMDATE + DAYS))) ~ "yes",
+    TRUE ~ "no"
+  )) %>% 
+  ungroup() %>% 
+  filter(surgery_within_the_admission=="yes") %>% 
+  rename(LOS=DAYS) %>% 
+  group_by(ENROLID, ADMDATE) %>% 
+  mutate(cost=sum(TOTPAY)) %>% 
+  mutate(total_LOS=sum(LOS)) %>% 
+  ungroup() %>% 
+  select(ENROLID, ADMDATE, SVCDATE, total_LOS, cost, any_monitoring_numeric, AGE, male, year_surgery, spinal_fusion_type, rural, region_category, employment_status_category, employment_class_category) %>% 
+  collect()
+  
+  
+
+
+# Inflation calculations (https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&categories=survey&_gl=1*1piml3m*_ga*NDg1MDgzODA2LjE3MDg0OTgxMjg.*_ga_J4698JNNFT*MTcwODQ5ODQ5Mi4xLjEuMTcwODQ5ODUzNi4xNi4wLjA.#eyJhcHBpZCI6MTksInN0ZXBzIjpbMSwyLDMsM10sImRhdGEiOltbImNhdGVnb3JpZXMiLCJTdXJ2ZXkiXSxbIk5JUEFfVGFibGVfTGlzdCIsIjQiXSxbIkZpcnN0X1llYXIiLCIyMDA2Il0sWyJMYXN0X1llYXIiLCIyMDIyIl0sWyJTY2FsZSIsIjAiXSxbIlNlcmllcyIsIlEiXV19 Last accessed 2/11/2024)
+# https://meps.ahrq.gov/about_meps/Price_Index.shtml
+inflation_2006_Q1 <- 0.83135
+inflation_2006_Q2 <- 0.83871	
+inflation_2006_Q3 <- 0.84486	
+inflation_2006_Q4 <- 0.84806
+inflation_2007_Q1 <- 0.85655
+inflation_2007_Q2 <- 0.86201	
+inflation_2007_Q3 <- 0.86568	
+inflation_2007_Q4 <- 0.86982	
+inflation_2008_Q1 <- 0.87359
+inflation_2008_Q2 <- 0.87678	
+inflation_2008_Q3 <- 0.88361	
+inflation_2008_Q4 <- 0.88511
+inflation_2009_Q1 <- 0.88536
+inflation_2009_Q2 <- 0.88418	
+inflation_2009_Q3 <- 0.88474	
+inflation_2009_Q4 <- 0.88798	
+inflation_2010_Q1 <- 0.89018	
+inflation_2010_Q2 <- 0.89431	
+inflation_2010_Q3 <- 0.89755			
+inflation_2010_Q4 <- 0.90270			
+inflation_2011_Q1 <- 0.90710
+inflation_2011_Q2 <- 0.91363	
+inflation_2011_Q3 <- 0.91840	
+inflation_2011_Q4 <- 0.91951	
+inflation_2012_Q1 <- 0.92495	
+inflation_2012_Q2 <- 0.92881	
+inflation_2012_Q3 <- 0.93459
+inflation_2012_Q4 <- 0.93869	
+inflation_2013_Q1 <- 0.94204
+inflation_2013_Q2 <- 0.94474
+inflation_2013_Q3 <- 0.94989
+inflation_2013_Q4 <- 0.95477		
+inflation_2014_Q1 <- 0.95840
+inflation_2014_Q2 <- 0.96343	
+inflation_2014_Q3 <- 0.96762
+inflation_2014_Q4 <- 0.96800		
+inflation_2015_Q1 <- 0.96742
+inflation_2015_Q2 <- 0.97302	
+inflation_2015_Q3 <- 0.97536
+inflation_2015_Q4 <- 0.97527
+inflation_2016_Q1 <- 0.97468	
+inflation_2016_Q2 <- 0.98108	
+inflation_2016_Q3 <- 0.98372
+inflation_2016_Q4 <- 0.98884
+inflation_2017_Q1 <- 0.99389
+inflation_2017_Q2 <- 0.99656		
+inflation_2017_Q3 <- 1.00174
+inflation_2017_Q4 <- 1.00780	
+inflation_2018_Q1 <- 1.01428	
+inflation_2018_Q2 <- 1.02140		
+inflation_2018_Q3 <- 1.02586
+inflation_2018_Q4 <- 1.03005		
+inflation_2019_Q1 <- 1.03375	
+inflation_2019_Q2 <- 1.03878		
+inflation_2019_Q3 <- 1.04213
+inflation_2019_Q4 <- 1.04566	
+inflation_2020_Q1 <- 1.05042
+inflation_2020_Q2 <- 1.04661		
+inflation_2020_Q3 <- 1.05593
+inflation_2020_Q4 <- 1.06330
+inflation_2021_Q1 <- 1.07731		
+inflation_2021_Q2 <- 1.09332		
+inflation_2021_Q3 <- 1.10957
+inflation_2021_Q4 <- 1.12858
+inflation_2022_Q1 <- 1.15182		
+inflation_2022_Q2 <- 1.17704			
+inflation_2022_Q3 <- 1.18980
+inflation_2022_Q4 <- 1.20115
+
+
+# Cost adjusted for inflation (to Q4 2022 year)
+inflation_adjusted_spinal_fusion_utilization <- spinal_fusion_utilization %>% 
+  mutate(year_quarter = quarter(SVCDATE, with_year=TRUE)) %>%
+  mutate(
+    cost = case_when(
+  year_quarter == 2006.1 ~ cost*(inflation_2022_Q4/inflation_2006_Q1), 
+  year_quarter == 2006.2 ~ cost*(inflation_2022_Q4/inflation_2006_Q2),
+  year_quarter == 2006.3 ~ cost*(inflation_2022_Q4/inflation_2006_Q3),
+  year_quarter == 2006.4 ~ cost*(inflation_2022_Q4/inflation_2006_Q4),  
+  year_quarter == 2007.1 ~ cost*(inflation_2022_Q4/inflation_2007_Q1), 
+  year_quarter == 2007.2 ~ cost*(inflation_2022_Q4/inflation_2007_Q2),
+  year_quarter == 2007.3 ~ cost*(inflation_2022_Q4/inflation_2007_Q3),
+  year_quarter == 2007.4 ~ cost*(inflation_2022_Q4/inflation_2007_Q4),  
+  year_quarter == 2008.1 ~ cost*(inflation_2022_Q4/inflation_2008_Q1), 
+  year_quarter == 2008.2 ~ cost*(inflation_2022_Q4/inflation_2008_Q2),
+  year_quarter == 2008.3 ~ cost*(inflation_2022_Q4/inflation_2008_Q3),
+  year_quarter == 2008.4 ~ cost*(inflation_2022_Q4/inflation_2008_Q4), 
+  year_quarter == 2009.1 ~ cost*(inflation_2022_Q4/inflation_2009_Q1), 
+  year_quarter == 2009.2 ~ cost*(inflation_2022_Q4/inflation_2009_Q2),
+  year_quarter == 2009.3 ~ cost*(inflation_2022_Q4/inflation_2009_Q3),
+  year_quarter == 2009.4 ~ cost*(inflation_2022_Q4/inflation_2009_Q4), 
+  year_quarter == 2010.1 ~ cost*(inflation_2022_Q4/inflation_2010_Q1), 
+  year_quarter == 2010.2 ~ cost*(inflation_2022_Q4/inflation_2010_Q2),
+  year_quarter == 2010.3 ~ cost*(inflation_2022_Q4/inflation_2010_Q3),
+  year_quarter == 2010.4 ~ cost*(inflation_2022_Q4/inflation_2010_Q4), 
+  year_quarter == 2011.1 ~ cost*(inflation_2022_Q4/inflation_2011_Q1), 
+  year_quarter == 2011.2 ~ cost*(inflation_2022_Q4/inflation_2011_Q2),
+  year_quarter == 2011.3 ~ cost*(inflation_2022_Q4/inflation_2011_Q3),
+  year_quarter == 2011.4 ~ cost*(inflation_2022_Q4/inflation_2011_Q4), 
+  year_quarter == 2012.1 ~ cost*(inflation_2022_Q4/inflation_2012_Q1), 
+  year_quarter == 2012.2 ~ cost*(inflation_2022_Q4/inflation_2012_Q2),
+  year_quarter == 2012.3 ~ cost*(inflation_2022_Q4/inflation_2012_Q3),
+  year_quarter == 2012.4 ~ cost*(inflation_2022_Q4/inflation_2012_Q4), 
+  year_quarter == 2013.1 ~ cost*(inflation_2022_Q4/inflation_2013_Q1), 
+  year_quarter == 2013.2 ~ cost*(inflation_2022_Q4/inflation_2013_Q2),
+  year_quarter == 2013.3 ~ cost*(inflation_2022_Q4/inflation_2013_Q3),
+  year_quarter == 2013.4 ~ cost*(inflation_2022_Q4/inflation_2013_Q4), 
+  year_quarter == 2014.1 ~ cost*(inflation_2022_Q4/inflation_2014_Q1), 
+  year_quarter == 2014.2 ~ cost*(inflation_2022_Q4/inflation_2014_Q2),
+  year_quarter == 2014.3 ~ cost*(inflation_2022_Q4/inflation_2014_Q3),
+  year_quarter == 2014.4 ~ cost*(inflation_2022_Q4/inflation_2014_Q4),  
+  year_quarter == 2015.1 ~ cost*(inflation_2022_Q4/inflation_2015_Q1), 
+  year_quarter == 2015.2 ~ cost*(inflation_2022_Q4/inflation_2015_Q2),
+  year_quarter == 2015.3 ~ cost*(inflation_2022_Q4/inflation_2015_Q3),
+  year_quarter == 2015.4 ~ cost*(inflation_2022_Q4/inflation_2015_Q4),  
+  year_quarter == 2016.1 ~ cost*(inflation_2022_Q4/inflation_2016_Q1), 
+  year_quarter == 2016.2 ~ cost*(inflation_2022_Q4/inflation_2016_Q2),
+  year_quarter == 2016.3 ~ cost*(inflation_2022_Q4/inflation_2016_Q3),
+  year_quarter == 2016.4 ~ cost*(inflation_2022_Q4/inflation_2016_Q4), 
+  year_quarter == 2017.1 ~ cost*(inflation_2022_Q4/inflation_2017_Q1), 
+  year_quarter == 2017.2 ~ cost*(inflation_2022_Q4/inflation_2017_Q2),
+  year_quarter == 2017.3 ~ cost*(inflation_2022_Q4/inflation_2017_Q3),
+  year_quarter == 2017.4 ~ cost*(inflation_2022_Q4/inflation_2017_Q4), 
+  year_quarter == 2018.1 ~ cost*(inflation_2022_Q4/inflation_2018_Q1), 
+  year_quarter == 2018.2 ~ cost*(inflation_2022_Q4/inflation_2018_Q2),
+  year_quarter == 2018.3 ~ cost*(inflation_2022_Q4/inflation_2018_Q3),
+  year_quarter == 2018.4 ~ cost*(inflation_2022_Q4/inflation_2018_Q4), 
+  year_quarter == 2019.1 ~ cost*(inflation_2022_Q4/inflation_2019_Q1), 
+  year_quarter == 2019.2 ~ cost*(inflation_2022_Q4/inflation_2019_Q2),
+  year_quarter == 2019.3 ~ cost*(inflation_2022_Q4/inflation_2019_Q3),
+  year_quarter == 2019.4 ~ cost*(inflation_2022_Q4/inflation_2019_Q4),
+  year_quarter == 2020.1 ~ cost*(inflation_2022_Q4/inflation_2020_Q1), 
+  year_quarter == 2020.2 ~ cost*(inflation_2022_Q4/inflation_2020_Q2),
+  year_quarter == 2020.3 ~ cost*(inflation_2022_Q4/inflation_2020_Q3),
+  year_quarter == 2020.4 ~ cost*(inflation_2022_Q4/inflation_2020_Q4),
+  year_quarter == 2021.1 ~ cost*(inflation_2022_Q4/inflation_2021_Q1), 
+  year_quarter == 2021.2 ~ cost*(inflation_2022_Q4/inflation_2021_Q2),
+  year_quarter == 2021.3 ~ cost*(inflation_2022_Q4/inflation_2021_Q3),
+  year_quarter == 2021.4 ~ cost*(inflation_2022_Q4/inflation_2021_Q4),
+  year_quarter == 2022.1 ~ cost*(inflation_2022_Q4/inflation_2022_Q1), 
+  year_quarter == 2022.2 ~ cost*(inflation_2022_Q4/inflation_2022_Q2),
+  year_quarter == 2022.3 ~ cost*(inflation_2022_Q4/inflation_2022_Q3),
+  year_quarter == 2022.4 ~ cost*(inflation_2022_Q4/inflation_2022_Q4))  
+  ) %>% 
+    collect()
+
+
+
+
+# Healthcare resource utilization  
+spinal_fusion_healthcare_utilization <- inflation_adjusted_spinal_fusion_utilization %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+spinal_fusion_healthcare_utilization
+
+
+spinal_fusion_healthcare_utilization_monitoring <- inflation_adjusted_spinal_fusion_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+spinal_fusion_healthcare_utilization_monitoring
+
+
+spinal_fusion_healthcare_utilization_no_monitoring <- inflation_adjusted_spinal_fusion_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+spinal_fusion_healthcare_utilization_no_monitoring
+
+
+spinal_fusion_healthcare_utilization_monitoring_data <- inflation_adjusted_spinal_fusion_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  collect()
+
+
+spinal_fusion_healthcare_utilization_no_monitoring_data <- inflation_adjusted_spinal_fusion_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  collect()
+
+
+wilcox.test(spinal_fusion_healthcare_utilization_monitoring_data$total_LOS, spinal_fusion_healthcare_utilization_no_monitoring_data$total_LOS, alternative="two.sided", paired=FALSE)
+
+wilcox.test(spinal_fusion_healthcare_utilization_monitoring_data$cost, spinal_fusion_healthcare_utilization_no_monitoring_data$cost, alternative="two.sided", paired=FALSE)
+
+
+
+  
+# Regression on spinal fusion utilization: length of stay
+spinal_fusion_utilization_zero_truncated_negative_binomial_regression_LOS <- vglm(formula = total_LOS ~ any_monitoring_numeric + AGE + male +  year_surgery + spinal_fusion_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_spinal_fusion_utilization, family = posnegbinomial)
+
+summary(spinal_fusion_utilization_zero_truncated_negative_binomial_regression_LOS)
+
+exp(cbind(coef(spinal_fusion_utilization_zero_truncated_negative_binomial_regression_LOS), confint(spinal_fusion_utilization_zero_truncated_negative_binomial_regression_LOS)))
+
+
+
+
+# Regression on spinal fusion utilization: cost
+spinal_fusion_utilization_linear_regression_cost <- lm(formula = cost ~ any_monitoring_numeric + AGE + male +  year_surgery + spinal_fusion_type + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_spinal_fusion_utilization)
+
+summary(spinal_fusion_utilization_linear_regression_cost)
+
+cbind(coef(spinal_fusion_utilization_linear_regression_cost), confint(spinal_fusion_utilization_linear_regression_cost))
 ```
 
 
@@ -4405,6 +6329,449 @@ tethered_cord_monitoring_results_by_year_plot
 
 
 
+Healthcare resource utilization among patients with tethered cord release
+```{r}
+# Health care resource utilization
+#################################2006#################################
+tethered_cord_utilization_2006_i <- ms_i_2006 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2007#################################
+tethered_cord_utilization_2007_i <- ms_i_2007 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2008#################################
+tethered_cord_utilization_2008_i <- ms_i_2008 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2009#################################
+tethered_cord_utilization_2009_i <- ms_i_2009 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2010#################################
+tethered_cord_utilization_2010_i <- ms_i_2010 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2011#################################
+tethered_cord_utilization_2011_i <- ms_i_2011 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2012#################################
+tethered_cord_utilization_2012_i <- ms_i_2012 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2013#################################
+tethered_cord_utilization_2013_i <- ms_i_2013 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2014#################################
+tethered_cord_utilization_2014_i <- ms_i_2014 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2015#################################
+tethered_cord_utilization_2015_i <- ms_i_2015 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2016#################################
+tethered_cord_utilization_2016_i <- ms_i_2016 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2017#################################
+tethered_cord_utilization_2017_i <- ms_i_2017 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2018#################################
+tethered_cord_utilization_2018_i <- ms_i_2018 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2019#################################
+tethered_cord_utilization_2019_i <- ms_i_2019 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2020#################################
+tethered_cord_utilization_2020_i <- ms_i_2020 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2021#################################
+tethered_cord_utilization_2021_i <- ms_i_2021 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2022#################################
+tethered_cord_utilization_2022_i <- ms_i_2022 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!tethered_cord_SSEP_MEP_EMG_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+
+
+# Utilization
+tethered_cord_utilization <- bind_rows(tethered_cord_utilization_2006_i, tethered_cord_utilization_2007_i, tethered_cord_utilization_2008_i, tethered_cord_utilization_2009_i, tethered_cord_utilization_2010_i, tethered_cord_utilization_2011_i, tethered_cord_utilization_2012_i, tethered_cord_utilization_2013_i, tethered_cord_utilization_2014_i, tethered_cord_utilization_2015_i, tethered_cord_utilization_2016_i, tethered_cord_utilization_2017_i, tethered_cord_utilization_2018_i, tethered_cord_utilization_2019_i, tethered_cord_utilization_2020_i, tethered_cord_utilization_2021_i, tethered_cord_utilization_2022_i) %>% 
+  mutate(across(ENROLID, as.numeric)) %>% 
+  filter(ENROLID>0) %>%    
+  arrange(ENROLID, ADMDATE) %>% 
+  right_join(tethered_cord_SSEP_MEP_EMG_demographics, by="ENROLID") %>% 
+  arrange(ENROLID, ADMDATE) %>%
+  rowwise() %>% 
+  mutate(surgery_within_the_admission = case_when(
+    (SVCDATE %in% as.Date(ADMDATE : (ADMDATE + DAYS))) ~ "yes",
+    TRUE ~ "no"
+  )) %>% 
+  ungroup() %>% 
+  filter(surgery_within_the_admission=="yes") %>% 
+  rename(LOS=DAYS) %>% 
+  group_by(ENROLID, ADMDATE) %>% 
+  mutate(cost=sum(TOTPAY)) %>% 
+  mutate(total_LOS=sum(LOS)) %>% 
+  ungroup() %>% 
+  select(ENROLID, ADMDATE, SVCDATE, total_LOS, cost, any_monitoring_numeric, AGE, male, year_surgery, rural, region_category, employment_status_category, employment_class_category) %>% 
+  collect()
+  
+  
+
+
+# Inflation calculations (https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&categories=survey&_gl=1*1piml3m*_ga*NDg1MDgzODA2LjE3MDg0OTgxMjg.*_ga_J4698JNNFT*MTcwODQ5ODQ5Mi4xLjEuMTcwODQ5ODUzNi4xNi4wLjA.#eyJhcHBpZCI6MTksInN0ZXBzIjpbMSwyLDMsM10sImRhdGEiOltbImNhdGVnb3JpZXMiLCJTdXJ2ZXkiXSxbIk5JUEFfVGFibGVfTGlzdCIsIjQiXSxbIkZpcnN0X1llYXIiLCIyMDA2Il0sWyJMYXN0X1llYXIiLCIyMDIyIl0sWyJTY2FsZSIsIjAiXSxbIlNlcmllcyIsIlEiXV19 Last accessed 2/11/2024)
+# https://meps.ahrq.gov/about_meps/Price_Index.shtml
+inflation_2006_Q1 <- 0.83135
+inflation_2006_Q2 <- 0.83871	
+inflation_2006_Q3 <- 0.84486	
+inflation_2006_Q4 <- 0.84806
+inflation_2007_Q1 <- 0.85655
+inflation_2007_Q2 <- 0.86201	
+inflation_2007_Q3 <- 0.86568	
+inflation_2007_Q4 <- 0.86982	
+inflation_2008_Q1 <- 0.87359
+inflation_2008_Q2 <- 0.87678	
+inflation_2008_Q3 <- 0.88361	
+inflation_2008_Q4 <- 0.88511
+inflation_2009_Q1 <- 0.88536
+inflation_2009_Q2 <- 0.88418	
+inflation_2009_Q3 <- 0.88474	
+inflation_2009_Q4 <- 0.88798	
+inflation_2010_Q1 <- 0.89018	
+inflation_2010_Q2 <- 0.89431	
+inflation_2010_Q3 <- 0.89755			
+inflation_2010_Q4 <- 0.90270			
+inflation_2011_Q1 <- 0.90710
+inflation_2011_Q2 <- 0.91363	
+inflation_2011_Q3 <- 0.91840	
+inflation_2011_Q4 <- 0.91951	
+inflation_2012_Q1 <- 0.92495	
+inflation_2012_Q2 <- 0.92881	
+inflation_2012_Q3 <- 0.93459
+inflation_2012_Q4 <- 0.93869	
+inflation_2013_Q1 <- 0.94204
+inflation_2013_Q2 <- 0.94474
+inflation_2013_Q3 <- 0.94989
+inflation_2013_Q4 <- 0.95477		
+inflation_2014_Q1 <- 0.95840
+inflation_2014_Q2 <- 0.96343	
+inflation_2014_Q3 <- 0.96762
+inflation_2014_Q4 <- 0.96800		
+inflation_2015_Q1 <- 0.96742
+inflation_2015_Q2 <- 0.97302	
+inflation_2015_Q3 <- 0.97536
+inflation_2015_Q4 <- 0.97527
+inflation_2016_Q1 <- 0.97468	
+inflation_2016_Q2 <- 0.98108	
+inflation_2016_Q3 <- 0.98372
+inflation_2016_Q4 <- 0.98884
+inflation_2017_Q1 <- 0.99389
+inflation_2017_Q2 <- 0.99656		
+inflation_2017_Q3 <- 1.00174
+inflation_2017_Q4 <- 1.00780	
+inflation_2018_Q1 <- 1.01428	
+inflation_2018_Q2 <- 1.02140		
+inflation_2018_Q3 <- 1.02586
+inflation_2018_Q4 <- 1.03005		
+inflation_2019_Q1 <- 1.03375	
+inflation_2019_Q2 <- 1.03878		
+inflation_2019_Q3 <- 1.04213
+inflation_2019_Q4 <- 1.04566	
+inflation_2020_Q1 <- 1.05042
+inflation_2020_Q2 <- 1.04661		
+inflation_2020_Q3 <- 1.05593
+inflation_2020_Q4 <- 1.06330
+inflation_2021_Q1 <- 1.07731		
+inflation_2021_Q2 <- 1.09332		
+inflation_2021_Q3 <- 1.10957
+inflation_2021_Q4 <- 1.12858
+inflation_2022_Q1 <- 1.15182		
+inflation_2022_Q2 <- 1.17704			
+inflation_2022_Q3 <- 1.18980
+inflation_2022_Q4 <- 1.20115
+
+
+# Cost adjusted for inflation (to Q4 2022 year)
+inflation_adjusted_tethered_cord_utilization <- tethered_cord_utilization %>% 
+  mutate(year_quarter = quarter(SVCDATE, with_year=TRUE)) %>%
+  mutate(
+    cost = case_when(
+  year_quarter == 2006.1 ~ cost*(inflation_2022_Q4/inflation_2006_Q1), 
+  year_quarter == 2006.2 ~ cost*(inflation_2022_Q4/inflation_2006_Q2),
+  year_quarter == 2006.3 ~ cost*(inflation_2022_Q4/inflation_2006_Q3),
+  year_quarter == 2006.4 ~ cost*(inflation_2022_Q4/inflation_2006_Q4),  
+  year_quarter == 2007.1 ~ cost*(inflation_2022_Q4/inflation_2007_Q1), 
+  year_quarter == 2007.2 ~ cost*(inflation_2022_Q4/inflation_2007_Q2),
+  year_quarter == 2007.3 ~ cost*(inflation_2022_Q4/inflation_2007_Q3),
+  year_quarter == 2007.4 ~ cost*(inflation_2022_Q4/inflation_2007_Q4),  
+  year_quarter == 2008.1 ~ cost*(inflation_2022_Q4/inflation_2008_Q1), 
+  year_quarter == 2008.2 ~ cost*(inflation_2022_Q4/inflation_2008_Q2),
+  year_quarter == 2008.3 ~ cost*(inflation_2022_Q4/inflation_2008_Q3),
+  year_quarter == 2008.4 ~ cost*(inflation_2022_Q4/inflation_2008_Q4), 
+  year_quarter == 2009.1 ~ cost*(inflation_2022_Q4/inflation_2009_Q1), 
+  year_quarter == 2009.2 ~ cost*(inflation_2022_Q4/inflation_2009_Q2),
+  year_quarter == 2009.3 ~ cost*(inflation_2022_Q4/inflation_2009_Q3),
+  year_quarter == 2009.4 ~ cost*(inflation_2022_Q4/inflation_2009_Q4), 
+  year_quarter == 2010.1 ~ cost*(inflation_2022_Q4/inflation_2010_Q1), 
+  year_quarter == 2010.2 ~ cost*(inflation_2022_Q4/inflation_2010_Q2),
+  year_quarter == 2010.3 ~ cost*(inflation_2022_Q4/inflation_2010_Q3),
+  year_quarter == 2010.4 ~ cost*(inflation_2022_Q4/inflation_2010_Q4), 
+  year_quarter == 2011.1 ~ cost*(inflation_2022_Q4/inflation_2011_Q1), 
+  year_quarter == 2011.2 ~ cost*(inflation_2022_Q4/inflation_2011_Q2),
+  year_quarter == 2011.3 ~ cost*(inflation_2022_Q4/inflation_2011_Q3),
+  year_quarter == 2011.4 ~ cost*(inflation_2022_Q4/inflation_2011_Q4), 
+  year_quarter == 2012.1 ~ cost*(inflation_2022_Q4/inflation_2012_Q1), 
+  year_quarter == 2012.2 ~ cost*(inflation_2022_Q4/inflation_2012_Q2),
+  year_quarter == 2012.3 ~ cost*(inflation_2022_Q4/inflation_2012_Q3),
+  year_quarter == 2012.4 ~ cost*(inflation_2022_Q4/inflation_2012_Q4), 
+  year_quarter == 2013.1 ~ cost*(inflation_2022_Q4/inflation_2013_Q1), 
+  year_quarter == 2013.2 ~ cost*(inflation_2022_Q4/inflation_2013_Q2),
+  year_quarter == 2013.3 ~ cost*(inflation_2022_Q4/inflation_2013_Q3),
+  year_quarter == 2013.4 ~ cost*(inflation_2022_Q4/inflation_2013_Q4), 
+  year_quarter == 2014.1 ~ cost*(inflation_2022_Q4/inflation_2014_Q1), 
+  year_quarter == 2014.2 ~ cost*(inflation_2022_Q4/inflation_2014_Q2),
+  year_quarter == 2014.3 ~ cost*(inflation_2022_Q4/inflation_2014_Q3),
+  year_quarter == 2014.4 ~ cost*(inflation_2022_Q4/inflation_2014_Q4),  
+  year_quarter == 2015.1 ~ cost*(inflation_2022_Q4/inflation_2015_Q1), 
+  year_quarter == 2015.2 ~ cost*(inflation_2022_Q4/inflation_2015_Q2),
+  year_quarter == 2015.3 ~ cost*(inflation_2022_Q4/inflation_2015_Q3),
+  year_quarter == 2015.4 ~ cost*(inflation_2022_Q4/inflation_2015_Q4),  
+  year_quarter == 2016.1 ~ cost*(inflation_2022_Q4/inflation_2016_Q1), 
+  year_quarter == 2016.2 ~ cost*(inflation_2022_Q4/inflation_2016_Q2),
+  year_quarter == 2016.3 ~ cost*(inflation_2022_Q4/inflation_2016_Q3),
+  year_quarter == 2016.4 ~ cost*(inflation_2022_Q4/inflation_2016_Q4), 
+  year_quarter == 2017.1 ~ cost*(inflation_2022_Q4/inflation_2017_Q1), 
+  year_quarter == 2017.2 ~ cost*(inflation_2022_Q4/inflation_2017_Q2),
+  year_quarter == 2017.3 ~ cost*(inflation_2022_Q4/inflation_2017_Q3),
+  year_quarter == 2017.4 ~ cost*(inflation_2022_Q4/inflation_2017_Q4), 
+  year_quarter == 2018.1 ~ cost*(inflation_2022_Q4/inflation_2018_Q1), 
+  year_quarter == 2018.2 ~ cost*(inflation_2022_Q4/inflation_2018_Q2),
+  year_quarter == 2018.3 ~ cost*(inflation_2022_Q4/inflation_2018_Q3),
+  year_quarter == 2018.4 ~ cost*(inflation_2022_Q4/inflation_2018_Q4), 
+  year_quarter == 2019.1 ~ cost*(inflation_2022_Q4/inflation_2019_Q1), 
+  year_quarter == 2019.2 ~ cost*(inflation_2022_Q4/inflation_2019_Q2),
+  year_quarter == 2019.3 ~ cost*(inflation_2022_Q4/inflation_2019_Q3),
+  year_quarter == 2019.4 ~ cost*(inflation_2022_Q4/inflation_2019_Q4),
+  year_quarter == 2020.1 ~ cost*(inflation_2022_Q4/inflation_2020_Q1), 
+  year_quarter == 2020.2 ~ cost*(inflation_2022_Q4/inflation_2020_Q2),
+  year_quarter == 2020.3 ~ cost*(inflation_2022_Q4/inflation_2020_Q3),
+  year_quarter == 2020.4 ~ cost*(inflation_2022_Q4/inflation_2020_Q4),
+  year_quarter == 2021.1 ~ cost*(inflation_2022_Q4/inflation_2021_Q1), 
+  year_quarter == 2021.2 ~ cost*(inflation_2022_Q4/inflation_2021_Q2),
+  year_quarter == 2021.3 ~ cost*(inflation_2022_Q4/inflation_2021_Q3),
+  year_quarter == 2021.4 ~ cost*(inflation_2022_Q4/inflation_2021_Q4),
+  year_quarter == 2022.1 ~ cost*(inflation_2022_Q4/inflation_2022_Q1), 
+  year_quarter == 2022.2 ~ cost*(inflation_2022_Q4/inflation_2022_Q2),
+  year_quarter == 2022.3 ~ cost*(inflation_2022_Q4/inflation_2022_Q3),
+  year_quarter == 2022.4 ~ cost*(inflation_2022_Q4/inflation_2022_Q4))  
+  ) %>% 
+    collect()
+
+
+
+
+# Healthcare resource utilization  
+tethered_cord_healthcare_utilization <- inflation_adjusted_tethered_cord_utilization %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+tethered_cord_healthcare_utilization
+
+
+tethered_cord_healthcare_utilization_monitoring <- inflation_adjusted_tethered_cord_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+tethered_cord_healthcare_utilization_monitoring
+
+
+tethered_cord_healthcare_utilization_no_monitoring <- inflation_adjusted_tethered_cord_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+tethered_cord_healthcare_utilization_no_monitoring
+
+
+tethered_cord_healthcare_utilization_monitoring_data <- inflation_adjusted_tethered_cord_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  collect()
+
+
+tethered_cord_healthcare_utilization_no_monitoring_data <- inflation_adjusted_tethered_cord_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  collect()
+
+
+wilcox.test(tethered_cord_healthcare_utilization_monitoring_data$total_LOS, tethered_cord_healthcare_utilization_no_monitoring_data$total_LOS, alternative="two.sided", paired=FALSE)
+
+wilcox.test(tethered_cord_healthcare_utilization_monitoring_data$cost, tethered_cord_healthcare_utilization_no_monitoring_data$cost, alternative="two.sided", paired=FALSE)
+
+
+
+  
+# Regression on tethered cord release utilization: length of stay
+tethered_cord_utilization_zero_truncated_negative_binomial_regression_LOS <- vglm(formula = total_LOS ~ any_monitoring_numeric + AGE + male +  year_surgery + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_tethered_cord_utilization, family = posnegbinomial)
+
+summary(tethered_cord_utilization_zero_truncated_negative_binomial_regression_LOS)
+
+exp(cbind(coef(tethered_cord_utilization_zero_truncated_negative_binomial_regression_LOS), confint(tethered_cord_utilization_zero_truncated_negative_binomial_regression_LOS)))
+
+
+
+
+# Regression on tethered cord release utilization: cost
+tethered_cord_utilization_linear_regression_cost <- lm(formula = cost ~ any_monitoring_numeric + AGE + male +  year_surgery + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_tethered_cord_utilization)
+
+summary(tethered_cord_utilization_linear_regression_cost)
+
+cbind(coef(tethered_cord_utilization_linear_regression_cost), confint(tethered_cord_utilization_linear_regression_cost))
+```
+
+
+
+
 
 
 
@@ -5359,6 +7726,449 @@ aortic_aneurysm_monitoring_results_by_year_plot <- ggplot(data=aortic_aneurysm_m
   scale_x_continuous(name="Year", breaks=2006:2022) +
   scale_y_continuous(name="Proportion", breaks=seq(0, 1, 0.1), limits = c(0, 1))
 aortic_aneurysm_monitoring_results_by_year_plot
+```
+
+
+
+
+Healthcare resource utilization among patients with aortic aneurysm surgery
+```{r}
+# Health care resource utilization
+#################################2006#################################
+aortic_aneurysm_utilization_2006_i <- ms_i_2006 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2007#################################
+aortic_aneurysm_utilization_2007_i <- ms_i_2007 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2008#################################
+aortic_aneurysm_utilization_2008_i <- ms_i_2008 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2009#################################
+aortic_aneurysm_utilization_2009_i <- ms_i_2009 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2010#################################
+aortic_aneurysm_utilization_2010_i <- ms_i_2010 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2011#################################
+aortic_aneurysm_utilization_2011_i <- ms_i_2011 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2012#################################
+aortic_aneurysm_utilization_2012_i <- ms_i_2012 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2013#################################
+aortic_aneurysm_utilization_2013_i <- ms_i_2013 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2014#################################
+aortic_aneurysm_utilization_2014_i <- ms_i_2014 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2015#################################
+aortic_aneurysm_utilization_2015_i <- ms_i_2015 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2016#################################
+aortic_aneurysm_utilization_2016_i <- ms_i_2016 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2017#################################
+aortic_aneurysm_utilization_2017_i <- ms_i_2017 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2018#################################
+aortic_aneurysm_utilization_2018_i <- ms_i_2018 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2019#################################
+aortic_aneurysm_utilization_2019_i <- ms_i_2019 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2020#################################
+aortic_aneurysm_utilization_2020_i <- ms_i_2020 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2021#################################
+aortic_aneurysm_utilization_2021_i <- ms_i_2021 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+#################################2022#################################
+aortic_aneurysm_utilization_2022_i <- ms_i_2022 %>% 
+  select(ENROLID, ADMDATE, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET) %>%
+  filter(ENROLID %in% !!aortic_aneurysm_SSEP_MEP_demographics$ENROLID) %>% 
+  mutate(across(c(ENROLID, DAYS, TOTPAY, TOTNET, TOTCOB, TOTCOINS, TOTCOPAY, TOTDED, HOSPPAY, HOSPNET, PHYSPAY, PHYSNET), as.numeric)) %>% 
+  filter(ENROLID>0) %>% 
+  collect() %>% 
+  mutate(across(ADMDATE, mdy)) 
+
+
+
+
+# Utilization
+aortic_aneurysm_utilization <- bind_rows(aortic_aneurysm_utilization_2006_i, aortic_aneurysm_utilization_2007_i, aortic_aneurysm_utilization_2008_i, aortic_aneurysm_utilization_2009_i, aortic_aneurysm_utilization_2010_i, aortic_aneurysm_utilization_2011_i, aortic_aneurysm_utilization_2012_i, aortic_aneurysm_utilization_2013_i, aortic_aneurysm_utilization_2014_i, aortic_aneurysm_utilization_2015_i, aortic_aneurysm_utilization_2016_i, aortic_aneurysm_utilization_2017_i, aortic_aneurysm_utilization_2018_i, aortic_aneurysm_utilization_2019_i, aortic_aneurysm_utilization_2020_i, aortic_aneurysm_utilization_2021_i, aortic_aneurysm_utilization_2022_i) %>% 
+  mutate(across(ENROLID, as.numeric)) %>% 
+  filter(ENROLID>0) %>%    
+  arrange(ENROLID, ADMDATE) %>% 
+  right_join(aortic_aneurysm_SSEP_MEP_demographics, by="ENROLID") %>% 
+  arrange(ENROLID, ADMDATE) %>%
+  rowwise() %>% 
+  mutate(surgery_within_the_admission = case_when(
+    (SVCDATE %in% as.Date(ADMDATE : (ADMDATE + DAYS))) ~ "yes",
+    TRUE ~ "no"
+  )) %>% 
+  ungroup() %>% 
+  filter(surgery_within_the_admission=="yes") %>% 
+  rename(LOS=DAYS) %>% 
+  group_by(ENROLID, ADMDATE) %>% 
+  mutate(cost=sum(TOTPAY)) %>% 
+  mutate(total_LOS=sum(LOS)) %>% 
+  ungroup() %>% 
+  select(ENROLID, ADMDATE, SVCDATE, total_LOS, cost, any_monitoring_numeric, AGE, male, year_surgery, rural, region_category, employment_status_category, employment_class_category) %>% 
+  collect()
+  
+  
+
+
+# Inflation calculations (https://apps.bea.gov/iTable/?reqid=19&step=2&isuri=1&categories=survey&_gl=1*1piml3m*_ga*NDg1MDgzODA2LjE3MDg0OTgxMjg.*_ga_J4698JNNFT*MTcwODQ5ODQ5Mi4xLjEuMTcwODQ5ODUzNi4xNi4wLjA.#eyJhcHBpZCI6MTksInN0ZXBzIjpbMSwyLDMsM10sImRhdGEiOltbImNhdGVnb3JpZXMiLCJTdXJ2ZXkiXSxbIk5JUEFfVGFibGVfTGlzdCIsIjQiXSxbIkZpcnN0X1llYXIiLCIyMDA2Il0sWyJMYXN0X1llYXIiLCIyMDIyIl0sWyJTY2FsZSIsIjAiXSxbIlNlcmllcyIsIlEiXV19 Last accessed 2/11/2024)
+# https://meps.ahrq.gov/about_meps/Price_Index.shtml
+inflation_2006_Q1 <- 0.83135
+inflation_2006_Q2 <- 0.83871	
+inflation_2006_Q3 <- 0.84486	
+inflation_2006_Q4 <- 0.84806
+inflation_2007_Q1 <- 0.85655
+inflation_2007_Q2 <- 0.86201	
+inflation_2007_Q3 <- 0.86568	
+inflation_2007_Q4 <- 0.86982	
+inflation_2008_Q1 <- 0.87359
+inflation_2008_Q2 <- 0.87678	
+inflation_2008_Q3 <- 0.88361	
+inflation_2008_Q4 <- 0.88511
+inflation_2009_Q1 <- 0.88536
+inflation_2009_Q2 <- 0.88418	
+inflation_2009_Q3 <- 0.88474	
+inflation_2009_Q4 <- 0.88798	
+inflation_2010_Q1 <- 0.89018	
+inflation_2010_Q2 <- 0.89431	
+inflation_2010_Q3 <- 0.89755			
+inflation_2010_Q4 <- 0.90270			
+inflation_2011_Q1 <- 0.90710
+inflation_2011_Q2 <- 0.91363	
+inflation_2011_Q3 <- 0.91840	
+inflation_2011_Q4 <- 0.91951	
+inflation_2012_Q1 <- 0.92495	
+inflation_2012_Q2 <- 0.92881	
+inflation_2012_Q3 <- 0.93459
+inflation_2012_Q4 <- 0.93869	
+inflation_2013_Q1 <- 0.94204
+inflation_2013_Q2 <- 0.94474
+inflation_2013_Q3 <- 0.94989
+inflation_2013_Q4 <- 0.95477		
+inflation_2014_Q1 <- 0.95840
+inflation_2014_Q2 <- 0.96343	
+inflation_2014_Q3 <- 0.96762
+inflation_2014_Q4 <- 0.96800		
+inflation_2015_Q1 <- 0.96742
+inflation_2015_Q2 <- 0.97302	
+inflation_2015_Q3 <- 0.97536
+inflation_2015_Q4 <- 0.97527
+inflation_2016_Q1 <- 0.97468	
+inflation_2016_Q2 <- 0.98108	
+inflation_2016_Q3 <- 0.98372
+inflation_2016_Q4 <- 0.98884
+inflation_2017_Q1 <- 0.99389
+inflation_2017_Q2 <- 0.99656		
+inflation_2017_Q3 <- 1.00174
+inflation_2017_Q4 <- 1.00780	
+inflation_2018_Q1 <- 1.01428	
+inflation_2018_Q2 <- 1.02140		
+inflation_2018_Q3 <- 1.02586
+inflation_2018_Q4 <- 1.03005		
+inflation_2019_Q1 <- 1.03375	
+inflation_2019_Q2 <- 1.03878		
+inflation_2019_Q3 <- 1.04213
+inflation_2019_Q4 <- 1.04566	
+inflation_2020_Q1 <- 1.05042
+inflation_2020_Q2 <- 1.04661		
+inflation_2020_Q3 <- 1.05593
+inflation_2020_Q4 <- 1.06330
+inflation_2021_Q1 <- 1.07731		
+inflation_2021_Q2 <- 1.09332		
+inflation_2021_Q3 <- 1.10957
+inflation_2021_Q4 <- 1.12858
+inflation_2022_Q1 <- 1.15182		
+inflation_2022_Q2 <- 1.17704			
+inflation_2022_Q3 <- 1.18980
+inflation_2022_Q4 <- 1.20115
+
+
+# Cost adjusted for inflation (to Q4 2022 year)
+inflation_adjusted_aortic_aneurysm_utilization <- aortic_aneurysm_utilization %>% 
+  mutate(year_quarter = quarter(SVCDATE, with_year=TRUE)) %>%
+  mutate(
+    cost = case_when(
+  year_quarter == 2006.1 ~ cost*(inflation_2022_Q4/inflation_2006_Q1), 
+  year_quarter == 2006.2 ~ cost*(inflation_2022_Q4/inflation_2006_Q2),
+  year_quarter == 2006.3 ~ cost*(inflation_2022_Q4/inflation_2006_Q3),
+  year_quarter == 2006.4 ~ cost*(inflation_2022_Q4/inflation_2006_Q4),  
+  year_quarter == 2007.1 ~ cost*(inflation_2022_Q4/inflation_2007_Q1), 
+  year_quarter == 2007.2 ~ cost*(inflation_2022_Q4/inflation_2007_Q2),
+  year_quarter == 2007.3 ~ cost*(inflation_2022_Q4/inflation_2007_Q3),
+  year_quarter == 2007.4 ~ cost*(inflation_2022_Q4/inflation_2007_Q4),  
+  year_quarter == 2008.1 ~ cost*(inflation_2022_Q4/inflation_2008_Q1), 
+  year_quarter == 2008.2 ~ cost*(inflation_2022_Q4/inflation_2008_Q2),
+  year_quarter == 2008.3 ~ cost*(inflation_2022_Q4/inflation_2008_Q3),
+  year_quarter == 2008.4 ~ cost*(inflation_2022_Q4/inflation_2008_Q4), 
+  year_quarter == 2009.1 ~ cost*(inflation_2022_Q4/inflation_2009_Q1), 
+  year_quarter == 2009.2 ~ cost*(inflation_2022_Q4/inflation_2009_Q2),
+  year_quarter == 2009.3 ~ cost*(inflation_2022_Q4/inflation_2009_Q3),
+  year_quarter == 2009.4 ~ cost*(inflation_2022_Q4/inflation_2009_Q4), 
+  year_quarter == 2010.1 ~ cost*(inflation_2022_Q4/inflation_2010_Q1), 
+  year_quarter == 2010.2 ~ cost*(inflation_2022_Q4/inflation_2010_Q2),
+  year_quarter == 2010.3 ~ cost*(inflation_2022_Q4/inflation_2010_Q3),
+  year_quarter == 2010.4 ~ cost*(inflation_2022_Q4/inflation_2010_Q4), 
+  year_quarter == 2011.1 ~ cost*(inflation_2022_Q4/inflation_2011_Q1), 
+  year_quarter == 2011.2 ~ cost*(inflation_2022_Q4/inflation_2011_Q2),
+  year_quarter == 2011.3 ~ cost*(inflation_2022_Q4/inflation_2011_Q3),
+  year_quarter == 2011.4 ~ cost*(inflation_2022_Q4/inflation_2011_Q4), 
+  year_quarter == 2012.1 ~ cost*(inflation_2022_Q4/inflation_2012_Q1), 
+  year_quarter == 2012.2 ~ cost*(inflation_2022_Q4/inflation_2012_Q2),
+  year_quarter == 2012.3 ~ cost*(inflation_2022_Q4/inflation_2012_Q3),
+  year_quarter == 2012.4 ~ cost*(inflation_2022_Q4/inflation_2012_Q4), 
+  year_quarter == 2013.1 ~ cost*(inflation_2022_Q4/inflation_2013_Q1), 
+  year_quarter == 2013.2 ~ cost*(inflation_2022_Q4/inflation_2013_Q2),
+  year_quarter == 2013.3 ~ cost*(inflation_2022_Q4/inflation_2013_Q3),
+  year_quarter == 2013.4 ~ cost*(inflation_2022_Q4/inflation_2013_Q4), 
+  year_quarter == 2014.1 ~ cost*(inflation_2022_Q4/inflation_2014_Q1), 
+  year_quarter == 2014.2 ~ cost*(inflation_2022_Q4/inflation_2014_Q2),
+  year_quarter == 2014.3 ~ cost*(inflation_2022_Q4/inflation_2014_Q3),
+  year_quarter == 2014.4 ~ cost*(inflation_2022_Q4/inflation_2014_Q4),  
+  year_quarter == 2015.1 ~ cost*(inflation_2022_Q4/inflation_2015_Q1), 
+  year_quarter == 2015.2 ~ cost*(inflation_2022_Q4/inflation_2015_Q2),
+  year_quarter == 2015.3 ~ cost*(inflation_2022_Q4/inflation_2015_Q3),
+  year_quarter == 2015.4 ~ cost*(inflation_2022_Q4/inflation_2015_Q4),  
+  year_quarter == 2016.1 ~ cost*(inflation_2022_Q4/inflation_2016_Q1), 
+  year_quarter == 2016.2 ~ cost*(inflation_2022_Q4/inflation_2016_Q2),
+  year_quarter == 2016.3 ~ cost*(inflation_2022_Q4/inflation_2016_Q3),
+  year_quarter == 2016.4 ~ cost*(inflation_2022_Q4/inflation_2016_Q4), 
+  year_quarter == 2017.1 ~ cost*(inflation_2022_Q4/inflation_2017_Q1), 
+  year_quarter == 2017.2 ~ cost*(inflation_2022_Q4/inflation_2017_Q2),
+  year_quarter == 2017.3 ~ cost*(inflation_2022_Q4/inflation_2017_Q3),
+  year_quarter == 2017.4 ~ cost*(inflation_2022_Q4/inflation_2017_Q4), 
+  year_quarter == 2018.1 ~ cost*(inflation_2022_Q4/inflation_2018_Q1), 
+  year_quarter == 2018.2 ~ cost*(inflation_2022_Q4/inflation_2018_Q2),
+  year_quarter == 2018.3 ~ cost*(inflation_2022_Q4/inflation_2018_Q3),
+  year_quarter == 2018.4 ~ cost*(inflation_2022_Q4/inflation_2018_Q4), 
+  year_quarter == 2019.1 ~ cost*(inflation_2022_Q4/inflation_2019_Q1), 
+  year_quarter == 2019.2 ~ cost*(inflation_2022_Q4/inflation_2019_Q2),
+  year_quarter == 2019.3 ~ cost*(inflation_2022_Q4/inflation_2019_Q3),
+  year_quarter == 2019.4 ~ cost*(inflation_2022_Q4/inflation_2019_Q4),
+  year_quarter == 2020.1 ~ cost*(inflation_2022_Q4/inflation_2020_Q1), 
+  year_quarter == 2020.2 ~ cost*(inflation_2022_Q4/inflation_2020_Q2),
+  year_quarter == 2020.3 ~ cost*(inflation_2022_Q4/inflation_2020_Q3),
+  year_quarter == 2020.4 ~ cost*(inflation_2022_Q4/inflation_2020_Q4),
+  year_quarter == 2021.1 ~ cost*(inflation_2022_Q4/inflation_2021_Q1), 
+  year_quarter == 2021.2 ~ cost*(inflation_2022_Q4/inflation_2021_Q2),
+  year_quarter == 2021.3 ~ cost*(inflation_2022_Q4/inflation_2021_Q3),
+  year_quarter == 2021.4 ~ cost*(inflation_2022_Q4/inflation_2021_Q4),
+  year_quarter == 2022.1 ~ cost*(inflation_2022_Q4/inflation_2022_Q1), 
+  year_quarter == 2022.2 ~ cost*(inflation_2022_Q4/inflation_2022_Q2),
+  year_quarter == 2022.3 ~ cost*(inflation_2022_Q4/inflation_2022_Q3),
+  year_quarter == 2022.4 ~ cost*(inflation_2022_Q4/inflation_2022_Q4))  
+  ) %>% 
+    collect()
+
+
+
+
+# Healthcare resource utilization  
+aortic_aneurysm_healthcare_utilization <- inflation_adjusted_aortic_aneurysm_utilization %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+aortic_aneurysm_healthcare_utilization
+
+
+aortic_aneurysm_healthcare_utilization_monitoring <- inflation_adjusted_aortic_aneurysm_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+aortic_aneurysm_healthcare_utilization_monitoring
+
+
+aortic_aneurysm_healthcare_utilization_no_monitoring <- inflation_adjusted_aortic_aneurysm_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  summarize(
+    median_LOS = median(total_LOS, na.rm=TRUE),
+    p25_LOS = quantile(total_LOS, 0.25, na.rm=TRUE),
+    p75_LOS = quantile(total_LOS, 0.75, na.rm=TRUE),
+    mean_LOS = mean(total_LOS, na.rm=TRUE),
+    SD_LOS = sd(total_LOS, na.rm=TRUE),
+    median_cost = median(cost, na.rm=TRUE),
+    p25_cost = quantile(cost, 0.25, na.rm=TRUE),
+    p75_cost = quantile(cost, 0.75, na.rm=TRUE),
+    mean_cost = mean(cost, na.rm=TRUE),
+    SD_cost = sd(cost, na.rm=TRUE)  
+  ) %>% 
+  collect()
+aortic_aneurysm_healthcare_utilization_no_monitoring
+
+
+aortic_aneurysm_healthcare_utilization_monitoring_data <- inflation_adjusted_aortic_aneurysm_utilization %>% 
+  filter(any_monitoring_numeric==1) %>% 
+  collect()
+
+
+aortic_aneurysm_healthcare_utilization_no_monitoring_data <- inflation_adjusted_aortic_aneurysm_utilization %>% 
+  filter(any_monitoring_numeric==0) %>% 
+  collect()
+
+
+wilcox.test(aortic_aneurysm_healthcare_utilization_monitoring_data$total_LOS, aortic_aneurysm_healthcare_utilization_no_monitoring_data$total_LOS, alternative="two.sided", paired=FALSE)
+
+wilcox.test(aortic_aneurysm_healthcare_utilization_monitoring_data$cost, aortic_aneurysm_healthcare_utilization_no_monitoring_data$cost, alternative="two.sided", paired=FALSE)
+
+
+
+  
+# Regression on aortic aneurysm surgery utilization: length of stay
+aortic_aneurysm_utilization_zero_truncated_negative_binomial_regression_LOS <- vglm(formula = total_LOS ~ any_monitoring_numeric + AGE + male +  year_surgery + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_aortic_aneurysm_utilization, family = posnegbinomial)
+
+summary(aortic_aneurysm_utilization_zero_truncated_negative_binomial_regression_LOS)
+
+exp(cbind(coef(aortic_aneurysm_utilization_zero_truncated_negative_binomial_regression_LOS), confint(aortic_aneurysm_utilization_zero_truncated_negative_binomial_regression_LOS)))
+
+
+
+
+# Regression on aortic aneurysm surgery utilization: cost
+aortic_aneurysm_utilization_linear_regression_cost <- lm(formula = cost ~ any_monitoring_numeric + AGE + male +  year_surgery + rural + relevel(region_category, ref="West") + relevel(employment_status_category, ref="other") + relevel(employment_class_category, ref="hourly"), data = inflation_adjusted_aortic_aneurysm_utilization)
+
+summary(aortic_aneurysm_utilization_linear_regression_cost)
+
+cbind(coef(aortic_aneurysm_utilization_linear_regression_cost), confint(aortic_aneurysm_utilization_linear_regression_cost))
 ```
 
 
